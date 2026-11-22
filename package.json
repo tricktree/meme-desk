@@ -1,0 +1,18 @@
+{
+  "name": "meme-desk",
+  "private": true,
+  "type": "module",
+  "description": "Paper-first Solana memecoin desk: hard kills, meme gates, closed judge, paper fills",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "dev": "agent-sdk dev"
+  },
+  "dependencies": {
+    "@grok/agent-sdk": "^0.7.2",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "typescript": "6.0.3"
+  }
+}
