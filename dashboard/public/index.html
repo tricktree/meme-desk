@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>meme-desk · PAPER</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="atmosphere" aria-hidden="true">
+      <div class="orb orb-a"></div>
+      <div class="orb orb-b"></div>
+      <div class="grid-fade"></div>
+      <div class="noise"></div>
+    </div>
+
+    <main class="desk">
+      <header class="mast">
+        <div class="brand-block">
+          <p class="brand">meme-desk</p>
+          <h1 class="headline">
+            <span class="paper-badge" id="paperBadge">PAPER</span>
+            <span class="headline-rest">$100 signal fund</span>
+          </h1>
+          <p class="lede">
+            Virtual bankroll only. No wallet. No LIVE spend controls.
+          </p>
+        </div>
+        <div class="mast-meta">
+          <div class="live-pill" id="livePill" title="Polling /api/desk">
+            <span class="pulse" aria-hidden="true"></span>
+            <span id="liveLabel">syncing</span>
+          </div>
+          <dl class="meta-dl">
+            <div>
+              <dt>Last scan</dt>
+              <dd id="lastScan">—</dd>
+            </div>
+            <div>
+              <dt>Updated</dt>
+              <dd id="updatedAt">—</dd>
+            </div>
+          </dl>
+        </div>
+      </header>
+
+      <section class="fund" aria-label="Paper fund metrics">
+        <article class="metric hero-metric">
+          <span class="metric-label">Equity</span>
+          <span class="metric-value" data-metric="equityUsd">—</span>
+          <span class="metric-sub" id="returnPct">vs $100 fund</span>
+        </article>
+        <div class="metric-row">
+          <article class="metric">
+            <span class="metric-label">Cash</span>
+            <span class="metric-value" data-metric="cashUsd">—</span>
+          </article>
+          <article class="metric">
+            <span class="metric-label">Exposure</span>
+            <span class="metric-value" data-metric="openExposureUsd">—</span>
+          </article>
+          <article class="metric">
+            <span class="metric-label">Realized</span>
+            <span class="metric-value" data-metric="realizedPnlUsd">—</span>
+          </article>
+          <article class="metric">
+            <span class="metric-label">Unrealized</span>
+            <span class="metric-value" data-metric="unrealizedPnlUsd">—</span>
+          </article>
+          <article class="metric">
+            <span class="metric-label">Return</span>
+            <span class="metric-value" data-metric="returnPctVsFund">—</span>
+          </article>
+          <article class="metric">
+            <span class="metric-label">Win rate</span>
+            <span class="metric-value" data-metric="winRate">—</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="split" aria-label="Positions and tape">
+        <div class="panel positions-panel">
+          <div class="panel-head">
+            <h2>Open tickets</h2>
+            <span class="count" id="openCount">0</span>
+          </div>
+          <ul class="positions" id="positions"></ul>
+          <p class="panel-foot" id="entriesToday"></p>
+        </div>
+        <div class="panel tape-panel">
+          <div class="panel-head">
+            <h2>Desk tape</h2>
+            <span class="count" id="logCount">0</span>
+          </div>
+          <ul class="tape" id="tape"></ul>
+        </div>
+      </section>
+
+      <footer class="foot">
+        <p>
+          Mode <strong>PAPER</strong> · ticket $25 · HELIUS optional for marks ·
+          book metrics from local paper state
+        </p>
+        <p class="counts" id="logBreakdown"></p>
+      </footer>
+    </main>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

@@ -25,3 +25,14 @@ npx --yes "@grok/agent-sdk@0.7.2" run --dir . --json --message "PAPER only. Call
 ```
 
 Optional read-only RPC: set `HELIUS_API_KEY` or `QUICKNODE_RPC_URL` (see `/cursor/stores/self/docs/rpc-setup.md`). Never wallet keys. No git remote invented.
+
+## PAPER desk dashboard
+
+Local live-ish UI for the $100 paper fund (cash / equity / exposure / PnL / win rate + tape). No wallet or LIVE controls.
+
+```bash
+npm run dashboard
+# → http://127.0.0.1:4177
+```
+
+State file: `.data/paper-desk.json` (gitignored). See project store doc `docs/paper-desk-dashboard.md`.

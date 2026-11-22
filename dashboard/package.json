@@ -1,0 +1,13 @@
+{
+  "name": "meme-desk-paper-dashboard",
+  "private": true,
+  "type": "module",
+  "description": "PAPER-only $100 fund desk dashboard (local book state)",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
