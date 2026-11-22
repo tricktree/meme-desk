@@ -116,16 +116,25 @@ function defaultState() {
   book.closedFlats = 0;
   book.dayPnlUsd = 10;
   book.entriesToday = 2;
+  // Ballpark Axiom/Dex levels for the sample story (not a live mark feed).
+  // WIF ~$0.12 / ~$120M; POPCAT ~$0.025 / ~$24M; +40% paper exit on POPCAT.
+  const wifEntryUsd = 0.12;
+  const wifEntryMcapUsd = 120_000_000;
+  const popEntryUsd = 0.025;
+  const popEntryMcapUsd = 24_000_000;
+  const popExitUsd = 0.035;
+  const popExitMcapUsd = 33_600_000;
+
   book.positions = {
     [DEMO.wif.mint]: {
       mint: DEMO.wif.mint,
       symbol: DEMO.wif.symbol,
       openedAt: t(42),
-      entryUsd: 1.85,
-      entryMcapUsd: 1_850_000_000,
+      entryUsd: wifEntryUsd,
+      entryMcapUsd: wifEntryMcapUsd,
       sizeUsd: 25,
       exitRule: "trail_20_after_take_80",
-      snap: { devPct: 0, top10CombinedPct: 18, liqUsd: 12_000_000 },
+      snap: { devPct: 0, top10CombinedPct: 18, liqUsd: 1_830_000 },
     },
   };
 
@@ -166,8 +175,8 @@ function defaultState() {
       cashUsd: 75,
       equityUsd: 100,
       openExposureUsd: 25,
-      entryUsd: 0.42,
-      entryMcapUsd: 420_000_000,
+      entryUsd: popEntryUsd,
+      entryMcapUsd: popEntryMcapUsd,
     },
     {
       time: t(55),
@@ -180,10 +189,10 @@ function defaultState() {
       cashUsd: 110,
       equityUsd: 110,
       openExposureUsd: 0,
-      entryUsd: 0.42,
-      exitUsd: 0.588,
-      entryMcapUsd: 420_000_000,
-      exitMcapUsd: 588_000_000,
+      entryUsd: popEntryUsd,
+      exitUsd: popExitUsd,
+      entryMcapUsd: popEntryMcapUsd,
+      exitMcapUsd: popExitMcapUsd,
     },
     {
       time: t(44),
@@ -202,8 +211,8 @@ function defaultState() {
       cashUsd: 85,
       equityUsd: 110,
       openExposureUsd: 25,
-      entryUsd: 1.85,
-      entryMcapUsd: 1_850_000_000,
+      entryUsd: wifEntryUsd,
+      entryMcapUsd: wifEntryMcapUsd,
     },
     {
       time: t(8),
@@ -231,7 +240,7 @@ function defaultState() {
     lastScanAt: t(2),
     updatedAt: new Date().toISOString(),
     marks: {},
-    note: "Sample PAPER desk snapshot using real Solana token mint CAs (BONK/WIF/POPCAT/FARTCOIN/PENGU) so CA lookups resolve as tokens. PnL figures are synthetic paper fills. Live paper_open/close record the agent-supplied mint as-is.",
+    note: "Sample PAPER desk: real token mint CAs; entry/exit price+mcap are ballpark illustration levels (not a live Axiom feed). Live paper_open/close log whatever entryMcapUsd/exitMcapUsd the agent passes from fetch_token_facts.",
   };
 }
 

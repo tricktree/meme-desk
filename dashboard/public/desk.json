@@ -25,38 +25,38 @@
     {
       "mint": "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
       "symbol": "WIF",
-      "openedAt": "2026-11-22T21:42:28.065Z",
-      "entryUsd": 1.85,
-      "entryMcapUsd": 1850000000,
+      "openedAt": "2026-11-22T22:17:54.248Z",
+      "entryUsd": 0.12,
+      "entryMcapUsd": 120000000,
       "sizeUsd": 25,
       "exitRule": "trail_20_after_take_80",
       "snap": {
         "devPct": 0,
         "top10CombinedPct": 18,
-        "liqUsd": 12000000
+        "liqUsd": 1830000
       }
     }
   ],
   "entriesToday": 2,
-  "lastScanAt": "2026-11-22T22:22:28.065Z",
-  "updatedAt": "2026-11-22T22:24:28.066Z",
+  "lastScanAt": "2026-11-22T22:57:54.248Z",
+  "updatedAt": "2026-11-22T22:59:54.248Z",
   "heliusOptional": true,
   "marksApplied": false,
   "recent": [
     {
-      "time": "2026-11-22T22:22:28.065Z",
+      "time": "2026-11-22T22:57:54.248Z",
       "kind": "scan",
       "detail": "paper-signal-scan tick — idle, 1 open, cash=$85"
     },
     {
-      "time": "2026-11-22T22:16:28.065Z",
+      "time": "2026-11-22T22:51:54.248Z",
       "kind": "kill",
       "mint": "2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv",
       "symbol": "PENGU",
       "detail": "kill:too_old,late_zone"
     },
     {
-      "time": "2026-11-22T21:42:28.065Z",
+      "time": "2026-11-22T22:17:54.248Z",
       "kind": "paper_open",
       "mint": "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
       "symbol": "WIF",
@@ -65,18 +65,18 @@
       "cashUsd": 85,
       "equityUsd": 110,
       "openExposureUsd": 25,
-      "entryUsd": 1.85,
-      "entryMcapUsd": 1850000000
+      "entryUsd": 0.12,
+      "entryMcapUsd": 120000000
     },
     {
-      "time": "2026-11-22T21:40:28.065Z",
+      "time": "2026-11-22T22:15:54.248Z",
       "kind": "verdict",
       "mint": "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
       "symbol": "WIF",
       "detail": "judge:buy actionP=0.81 organicP=0.70 exitRisk=2"
     },
     {
-      "time": "2026-11-22T21:29:28.065Z",
+      "time": "2026-11-22T22:04:54.248Z",
       "kind": "paper_close",
       "mint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
       "symbol": "POPCAT",
@@ -86,13 +86,13 @@
       "cashUsd": 110,
       "equityUsd": 110,
       "openExposureUsd": 0,
-      "entryUsd": 0.42,
-      "exitUsd": 0.588,
-      "entryMcapUsd": 420000000,
-      "exitMcapUsd": 588000000
+      "entryUsd": 0.025,
+      "exitUsd": 0.035,
+      "entryMcapUsd": 24000000,
+      "exitMcapUsd": 33600000
     },
     {
-      "time": "2026-11-22T20:56:28.065Z",
+      "time": "2026-11-22T21:31:54.248Z",
       "kind": "paper_open",
       "mint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
       "symbol": "POPCAT",
@@ -101,32 +101,32 @@
       "cashUsd": 75,
       "equityUsd": 100,
       "openExposureUsd": 25,
-      "entryUsd": 0.42,
-      "entryMcapUsd": 420000000
+      "entryUsd": 0.025,
+      "entryMcapUsd": 24000000
     },
     {
-      "time": "2026-11-22T20:54:28.065Z",
+      "time": "2026-11-22T21:29:54.248Z",
       "kind": "verdict",
       "mint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
       "symbol": "POPCAT",
       "detail": "judge:buy actionP=0.78 organicP=0.72 exitRisk=2"
     },
     {
-      "time": "2026-11-22T20:24:28.065Z",
+      "time": "2026-11-22T20:59:54.248Z",
       "kind": "kill",
       "mint": "9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
       "symbol": "FARTCOIN",
       "detail": "kill:dev_pct,lp_unlocked"
     },
     {
-      "time": "2026-11-22T19:29:28.065Z",
+      "time": "2026-11-22T20:04:54.248Z",
       "kind": "kill",
       "mint": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
       "symbol": "BONK",
       "detail": "kill:top10,insiders,too_old,mcap_band"
     },
     {
-      "time": "2026-11-22T19:24:28.065Z",
+      "time": "2026-11-22T19:59:54.248Z",
       "kind": "scan",
       "detail": "paper-signal-scan tick — 6 leads scored"
     }
@@ -138,6 +138,6 @@
     "opens": 2,
     "closes": 1
   },
-  "note": "Sample PAPER desk snapshot using real Solana token mint CAs (BONK/WIF/POPCAT/FARTCOIN/PENGU) so CA lookups resolve as tokens. PnL figures are synthetic paper fills. Live paper_open/close record the agent-supplied mint as-is.",
+  "note": "Sample PAPER desk: real token mint CAs; entry/exit price+mcap are ballpark illustration levels (not a live Axiom feed). Live paper_open/close log whatever entryMcapUsd/exitMcapUsd the agent passes from fetch_token_facts.",
   "source": "static"
 }
