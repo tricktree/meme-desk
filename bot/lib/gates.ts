@@ -91,7 +91,10 @@ export function hardKill(facts: HardKillFacts): { verdict: "kill" | "pass"; reas
     const ratio = facts.sells1h / Math.max(facts.buys1h, 1);
     if (ratio < 0.15) reasons.push("no_sells");
   }
-  if (facts.mcapUsd != null && (facts.mcapUsd < 25_000 || facts.mcapUsd > 5_000_000)) {
+  if (
+    facts.mcapUsd != null &&
+    (facts.mcapUsd < e.minMcapUsd || facts.mcapUsd > e.maxMcapUsd)
+  ) {
     reasons.push("mcap_band");
   }
   const ticket = facts.ticketUsd ?? DESK.ticketUsd;

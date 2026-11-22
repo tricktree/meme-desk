@@ -21,6 +21,12 @@ export const DESK = {
     maxTicketShare: 0.01,
     minAgeMin: 30,
     maxAgeHours: 48,
+    /**
+     * Early-market band (X-article thesis): prefer micro/early mcap, not saturated large-caps.
+     * hard_kill rejects outside this range when mcapUsd is known.
+     */
+    minMcapUsd: 20_000,
+    maxMcapUsd: 1_000_000,
   },
   gates: {
     copyMinHoldMin: 5,

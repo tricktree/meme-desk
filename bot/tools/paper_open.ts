@@ -17,7 +17,8 @@ export default defineTool({
   description: prompt`
     Open a PAPER position against the fixed $100 virtual fund. Never signs, never holds keys.
     Debits cash by the flat ticket, attaches the exit rule, and returns bankroll (cash, equity, exposure).
-    Requires prior gate verdict buy.
+    Requires prior gate verdict buy. mint + entryUsd + entryMcapUsd must come from fetch_token_facts
+    for an early-band lead (config minMcapUsd–maxMcapUsd). Never open saturated large-caps.
   `,
   effect: "write",
   dryRunResult: ({ mint, symbol }) => ({
@@ -33,8 +34,8 @@ export default defineTool({
     mint: z.string().min(32).max(44),
     symbol: z.string().min(1),
     entryUsd: z.number().positive(),
-    /** Market cap USD at entry (from DexScreener / facts), when known. */
-    entryMcapUsd: z.number().positive().optional(),
+    /** Market cap USD at entry from fetch_token_facts (required). */
+    entryMcapUsd: z.number().positive(),
     judgeVerdict: z.literal("buy"),
     snapDevPct: z.number().optional(),
     snapTop10CombinedPct: z.number().optional(),
@@ -51,6 +52,18 @@ export default defineTool({
         error: "invalid_mint_ca",
         paper: true,
         hint: "mint must be the Solana base58 contract address from fetch_token_facts, not a symbol or placeholder",
+      };
+    }
+    if (
+      input.entryMcapUsd < DESK.entry.minMcapUsd ||
+      input.entryMcapUsd > DESK.entry.maxMcapUsd
+    ) {
+      return {
+        opened: false,
+        error: "mcap_band",
+        paper: true,
+        hint: `entryMcapUsd must be in early band $${DESK.entry.minMcapUsd}–$${DESK.entry.maxMcapUsd}`,
+        entryMcapUsd: input.entryMcapUsd,
       };
     }
     const book = await loadBook(ctx.host.kv);

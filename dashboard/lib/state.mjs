@@ -40,21 +40,18 @@ function emptyBook() {
 }
 
 /**
- * Sample tape uses real Solana token mint CAs (lookup as tokens on Axiom/DexScreener).
- * Random base58 pubkeys resolve as empty wallets — never invent mint strings.
- * Real paper_open/close still log whatever live CA the agent passes.
+ * Real token mint CAs for kill-tape examples (Axiom resolves as tokens).
+ * Sample does NOT invent +TP wins against these charts — large-caps are shown as mcap_band kills.
  */
 const DEMO = {
   bonk: {
     mint: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
     symbol: "BONK",
   },
-  /** Open paper ticket in the sample book. */
   wif: {
     mint: "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
     symbol: "WIF",
   },
-  /** Closed +40% sample trade. */
   popcat: {
     mint: "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
     symbol: "POPCAT",
@@ -108,41 +105,22 @@ function defaultState() {
   const now = Date.now();
   const t = (minsAgo) => new Date(now - minsAgo * 60_000).toISOString();
   const book = emptyBook();
-  // Seed a realistic PAPER session: one closed win, one open ticket, kills in the log.
-  book.cashUsd = 75;
-  book.realizedPnlUsd = 10;
-  book.closedWins = 1;
+  // Honest sample: no open tickets, no invented TP wins. Tape shows large-caps killed for mcap_band.
+  book.cashUsd = STARTING_FUND_USD;
+  book.realizedPnlUsd = 0;
+  book.closedWins = 0;
   book.closedLosses = 0;
   book.closedFlats = 0;
-  book.dayPnlUsd = 10;
-  book.entriesToday = 2;
-  // Ballpark Axiom/Dex levels for the sample story (not a live mark feed).
-  // WIF ~$0.12 / ~$120M; POPCAT ~$0.025 / ~$24M; +40% paper exit on POPCAT.
-  const wifEntryUsd = 0.12;
-  const wifEntryMcapUsd = 120_000_000;
-  const popEntryUsd = 0.025;
-  const popEntryMcapUsd = 24_000_000;
-  const popExitUsd = 0.035;
-  const popExitMcapUsd = 33_600_000;
-
-  book.positions = {
-    [DEMO.wif.mint]: {
-      mint: DEMO.wif.mint,
-      symbol: DEMO.wif.symbol,
-      openedAt: t(42),
-      entryUsd: wifEntryUsd,
-      entryMcapUsd: wifEntryMcapUsd,
-      sizeUsd: 25,
-      exitRule: "trail_20_after_take_80",
-      snap: { devPct: 0, top10CombinedPct: 18, liqUsd: 1_830_000 },
-    },
-  };
+  book.dayPnlUsd = 0;
+  book.entriesToday = 0;
+  book.positions = {};
 
   const log = [
     {
       time: t(180),
       kind: "scan",
-      detail: "paper-signal-scan tick — 6 leads scored",
+      detail:
+        "paper-signal-scan — early-mcap band $20k–$1M; reject saturated large-caps",
     },
     {
       time: t(175),
@@ -154,82 +132,39 @@ function defaultState() {
     {
       time: t(120),
       kind: "kill",
-      mint: DEMO.fartcoin.mint,
-      symbol: DEMO.fartcoin.symbol,
-      detail: "kill:dev_pct,lp_unlocked",
+      mint: DEMO.wif.mint,
+      symbol: DEMO.wif.symbol,
+      detail: "kill:mcap_band (above $1M early-band max — not a paper open)",
     },
     {
       time: t(90),
-      kind: "verdict",
+      kind: "kill",
       mint: DEMO.popcat.mint,
       symbol: DEMO.popcat.symbol,
-      detail: "judge:buy actionP=0.78 organicP=0.72 exitRisk=2",
+      detail:
+        "kill:mcap_band,too_old — no synthetic +40% close; chart must print the mark",
     },
     {
-      time: t(88),
-      kind: "paper_open",
-      mint: DEMO.popcat.mint,
-      symbol: DEMO.popcat.symbol,
-      detail: "paper_open ticket=$25 exit=trail_20_after_take_80",
-      sizeUsd: 25,
-      cashUsd: 75,
-      equityUsd: 100,
-      openExposureUsd: 25,
-      entryUsd: popEntryUsd,
-      entryMcapUsd: popEntryMcapUsd,
+      time: t(60),
+      kind: "kill",
+      mint: DEMO.fartcoin.mint,
+      symbol: DEMO.fartcoin.symbol,
+      detail: "kill:mcap_band",
     },
     {
-      time: t(55),
-      kind: "paper_close",
-      mint: DEMO.popcat.mint,
-      symbol: DEMO.popcat.symbol,
-      detail: "paper_close +40% trail hit",
-      sizeUsd: 25,
-      pnlUsd: 10,
-      cashUsd: 110,
-      equityUsd: 110,
-      openExposureUsd: 0,
-      entryUsd: popEntryUsd,
-      exitUsd: popExitUsd,
-      entryMcapUsd: popEntryMcapUsd,
-      exitMcapUsd: popExitMcapUsd,
-    },
-    {
-      time: t(44),
-      kind: "verdict",
-      mint: DEMO.wif.mint,
-      symbol: DEMO.wif.symbol,
-      detail: "judge:buy actionP=0.81 organicP=0.70 exitRisk=2",
-    },
-    {
-      time: t(42),
-      kind: "paper_open",
-      mint: DEMO.wif.mint,
-      symbol: DEMO.wif.symbol,
-      detail: "paper_open ticket=$25 exit=trail_20_after_take_80",
-      sizeUsd: 25,
-      cashUsd: 85,
-      equityUsd: 110,
-      openExposureUsd: 25,
-      entryUsd: wifEntryUsd,
-      entryMcapUsd: wifEntryMcapUsd,
-    },
-    {
-      time: t(8),
+      time: t(30),
       kind: "kill",
       mint: DEMO.pengu.mint,
       symbol: DEMO.pengu.symbol,
-      detail: "kill:too_old,late_zone",
+      detail: "kill:mcap_band,too_old",
     },
     {
       time: t(2),
       kind: "scan",
-      detail: "paper-signal-scan tick — idle, 1 open, cash=$85",
+      detail:
+        "idle — $100 cash, 0 opens, 0 synthetic wins; waiting for early-band leads",
     },
   ];
-
-  // After close cash=110, then open WIF $25 → cash 85.
-  book.cashUsd = 85;
 
   return {
     mode: "paper",
@@ -240,7 +175,9 @@ function defaultState() {
     lastScanAt: t(2),
     updatedAt: new Date().toISOString(),
     marks: {},
-    note: "Sample PAPER desk: real token mint CAs; entry/exit price+mcap are ballpark illustration levels (not a live Axiom feed). Live paper_open/close log whatever entryMcapUsd/exitMcapUsd the agent passes from fetch_token_facts.",
+    note: "SAMPLE UI ONLY: no invented take-profit fills. Large-cap CAs appear as mcap_band kills. Live paper_close requires fresh fetch_token_facts marks.",
+    sampleDisclaimer:
+      "Synthetic TP fills removed. Hosted metrics are a clean $100 book until the live paper loop writes real opens/closes.",
   };
 }
 
@@ -294,6 +231,7 @@ export function buildDashboardPayload(state = loadState()) {
     walletControls: false,
     startingFundUsd: STARTING_FUND_USD,
     ticketUsd: TICKET_USD,
+    earlyMcapBand: { minUsd: 20_000, maxUsd: 1_000_000 },
     fund,
     openPositions: Object.values(book.positions ?? {}),
     entriesToday: book.entriesToday ?? 0,
@@ -310,6 +248,7 @@ export function buildDashboardPayload(state = loadState()) {
       closes: closes.length,
     },
     note: state.note ?? null,
+    sampleDisclaimer: state.sampleDisclaimer ?? null,
     source: "api",
   };
 }
@@ -320,7 +259,7 @@ export function writeStaticDeskJson(publicDir) {
   payload.source = "static";
   payload.note =
     payload.note ||
-    "Sample PAPER desk snapshot for hosted static preview. Local `npm run dashboard` serves live /api/desk.";
+    "Sample PAPER desk snapshot for hosted static preview.";
   const out = path.join(publicDir, "desk.json");
   fs.writeFileSync(out, JSON.stringify(payload, null, 2) + "\n");
   return out;

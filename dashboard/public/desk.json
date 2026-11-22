@@ -5,139 +5,87 @@
   "walletControls": false,
   "startingFundUsd": 100,
   "ticketUsd": 25,
+  "earlyMcapBand": {
+    "minUsd": 20000,
+    "maxUsd": 1000000
+  },
   "fund": {
     "startingFundUsd": 100,
-    "cashUsd": 85,
-    "openExposureUsd": 25,
+    "cashUsd": 100,
+    "openExposureUsd": 0,
     "unrealizedPnlUsd": 0,
-    "realizedPnlUsd": 10,
-    "equityUsd": 110,
-    "returnPctVsFund": 10,
-    "openCount": 1,
-    "closedTrades": 1,
-    "wins": 1,
+    "realizedPnlUsd": 0,
+    "equityUsd": 100,
+    "returnPctVsFund": 0,
+    "openCount": 0,
+    "closedTrades": 0,
+    "wins": 0,
     "losses": 0,
     "flats": 0,
-    "winRate": 100,
-    "dayPnlUsd": 10
+    "winRate": null,
+    "dayPnlUsd": 0
   },
-  "openPositions": [
-    {
-      "mint": "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
-      "symbol": "WIF",
-      "openedAt": "2026-11-22T22:17:54.248Z",
-      "entryUsd": 0.12,
-      "entryMcapUsd": 120000000,
-      "sizeUsd": 25,
-      "exitRule": "trail_20_after_take_80",
-      "snap": {
-        "devPct": 0,
-        "top10CombinedPct": 18,
-        "liqUsd": 1830000
-      }
-    }
-  ],
-  "entriesToday": 2,
-  "lastScanAt": "2026-11-22T22:57:54.248Z",
-  "updatedAt": "2026-11-22T22:59:54.248Z",
+  "openPositions": [],
+  "entriesToday": 0,
+  "lastScanAt": "2026-11-22T23:25:16.422Z",
+  "updatedAt": "2026-11-22T23:27:16.422Z",
   "heliusOptional": true,
   "marksApplied": false,
   "recent": [
     {
-      "time": "2026-11-22T22:57:54.248Z",
+      "time": "2026-11-22T23:25:16.422Z",
       "kind": "scan",
-      "detail": "paper-signal-scan tick — idle, 1 open, cash=$85"
+      "detail": "idle — $100 cash, 0 opens, 0 synthetic wins; waiting for early-band leads"
     },
     {
-      "time": "2026-11-22T22:51:54.248Z",
+      "time": "2026-11-22T22:57:16.422Z",
       "kind": "kill",
       "mint": "2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv",
       "symbol": "PENGU",
-      "detail": "kill:too_old,late_zone"
+      "detail": "kill:mcap_band,too_old"
     },
     {
-      "time": "2026-11-22T22:17:54.248Z",
-      "kind": "paper_open",
-      "mint": "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
-      "symbol": "WIF",
-      "detail": "paper_open ticket=$25 exit=trail_20_after_take_80",
-      "sizeUsd": 25,
-      "cashUsd": 85,
-      "equityUsd": 110,
-      "openExposureUsd": 25,
-      "entryUsd": 0.12,
-      "entryMcapUsd": 120000000
-    },
-    {
-      "time": "2026-11-22T22:15:54.248Z",
-      "kind": "verdict",
-      "mint": "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
-      "symbol": "WIF",
-      "detail": "judge:buy actionP=0.81 organicP=0.70 exitRisk=2"
-    },
-    {
-      "time": "2026-11-22T22:04:54.248Z",
-      "kind": "paper_close",
-      "mint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
-      "symbol": "POPCAT",
-      "detail": "paper_close +40% trail hit",
-      "sizeUsd": 25,
-      "pnlUsd": 10,
-      "cashUsd": 110,
-      "equityUsd": 110,
-      "openExposureUsd": 0,
-      "entryUsd": 0.025,
-      "exitUsd": 0.035,
-      "entryMcapUsd": 24000000,
-      "exitMcapUsd": 33600000
-    },
-    {
-      "time": "2026-11-22T21:31:54.248Z",
-      "kind": "paper_open",
-      "mint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
-      "symbol": "POPCAT",
-      "detail": "paper_open ticket=$25 exit=trail_20_after_take_80",
-      "sizeUsd": 25,
-      "cashUsd": 75,
-      "equityUsd": 100,
-      "openExposureUsd": 25,
-      "entryUsd": 0.025,
-      "entryMcapUsd": 24000000
-    },
-    {
-      "time": "2026-11-22T21:29:54.248Z",
-      "kind": "verdict",
-      "mint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
-      "symbol": "POPCAT",
-      "detail": "judge:buy actionP=0.78 organicP=0.72 exitRisk=2"
-    },
-    {
-      "time": "2026-11-22T20:59:54.248Z",
+      "time": "2026-11-22T22:27:16.422Z",
       "kind": "kill",
       "mint": "9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
       "symbol": "FARTCOIN",
-      "detail": "kill:dev_pct,lp_unlocked"
+      "detail": "kill:mcap_band"
     },
     {
-      "time": "2026-11-22T20:04:54.248Z",
+      "time": "2026-11-22T21:57:16.422Z",
+      "kind": "kill",
+      "mint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+      "symbol": "POPCAT",
+      "detail": "kill:mcap_band,too_old — no synthetic +40% close; chart must print the mark"
+    },
+    {
+      "time": "2026-11-22T21:27:16.422Z",
+      "kind": "kill",
+      "mint": "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
+      "symbol": "WIF",
+      "detail": "kill:mcap_band (above $1M early-band max — not a paper open)"
+    },
+    {
+      "time": "2026-11-22T20:32:16.422Z",
       "kind": "kill",
       "mint": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
       "symbol": "BONK",
       "detail": "kill:top10,insiders,too_old,mcap_band"
     },
     {
-      "time": "2026-11-22T19:59:54.248Z",
+      "time": "2026-11-22T20:27:16.422Z",
       "kind": "scan",
-      "detail": "paper-signal-scan tick — 6 leads scored"
+      "detail": "paper-signal-scan — early-mcap band $20k–$1M; reject saturated large-caps"
     }
   ],
   "logCounts": {
-    "total": 10,
-    "kills": 3,
-    "verdicts": 2,
-    "opens": 2,
-    "closes": 1
+    "total": 7,
+    "kills": 5,
+    "verdicts": 0,
+    "opens": 0,
+    "closes": 0
   },
-  "note": "Sample PAPER desk: real token mint CAs; entry/exit price+mcap are ballpark illustration levels (not a live Axiom feed). Live paper_open/close log whatever entryMcapUsd/exitMcapUsd the agent passes from fetch_token_facts.",
+  "note": "SAMPLE UI ONLY: no invented take-profit fills. Large-cap CAs appear as mcap_band kills. Live paper_close requires fresh fetch_token_facts marks.",
+  "sampleDisclaimer": "Synthetic TP fills removed. Hosted metrics are a clean $100 book until the live paper loop writes real opens/closes.",
   "source": "static"
 }

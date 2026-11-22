@@ -82,7 +82,8 @@ async function liveKillPath() {
 }
 
 async function syntheticOpenClosePath() {
-  // Real POPCAT mint CA (token, not a wallet pubkey) for synthetic gate/open/close path.
+  // Bankroll arithmetic only (not an Axiom TP claim). Mint is real POPCAT CA;
+  // facts are synthetic and mcap stays inside early band ($20k–$1M).
   const mint = "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr";
   const symbol = "POPCAT";
   const entryUsd = 0.01;
@@ -196,7 +197,7 @@ async function syntheticOpenClosePath() {
     kind: "paper_close",
     mint,
     symbol,
-    detail: "trail_or_take_smoke",
+    detail: "eval_bankroll_math_only_not_axiom_tp",
     sizeUsd: size,
     pnlUsd: tradePnlUsd,
     cashUsd: afterClose.cashUsd,
@@ -206,6 +207,8 @@ async function syntheticOpenClosePath() {
     exitUsd: markUsd,
     entryMcapUsd,
     exitMcapUsd,
+    markSource: "script_synthetic",
+    movePct: 40,
   });
 
   const deskReport = {

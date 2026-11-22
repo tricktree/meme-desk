@@ -15,7 +15,8 @@ export default defineEval({
         "mcapUsd=400000, quoteIsSolOrStable=true, mcapOverAth=0.5, athAgeHours=0.8, eventThemed=false.",
         "Then judge_gate: action=buy, actionP=0.78, organic=yes, organicP=0.72, late=no, exitRisk=2.",
         "If buy, paper_open with entryUsd=0.01, entryMcapUsd=400000, judgeVerdict=buy, symbol=POPCAT.",
-        "Then paper_close markUsd=0.014 exitMcapUsd=560000 reason=take_smoke.",
+        "Then paper_close with markSource=fetch_token_facts, markFetchedAt=now ISO, markUsd=0.014,",
+        "exitMcapUsd=560000, reason=eval_bankroll_math_only (this eval is synthetic fund arithmetic, not an Axiom claim).",
         "Then desk_report kind=status. Summarize fund cash/equity vs the $100 start. No live trading.",
       ].join(" "),
     );

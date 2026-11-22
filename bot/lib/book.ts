@@ -60,6 +60,11 @@ export type LogLine = {
   entryMcapUsd?: number;
   /** Market cap USD at paper close. */
   exitMcapUsd?: number;
+  /** Where exit mark came from (must be fetch_token_facts for live closes). */
+  markSource?: string;
+  markFetchedAt?: string;
+  /** Percent move entry→exit at close. */
+  movePct?: number;
 };
 
 export type BankrollSnapshot = {

@@ -196,6 +196,16 @@ function applyDesk(desk) {
 
   renderPositions(desk.openPositions || []);
   renderTape(desk.recent || []);
+
+  const banner = $("#sampleBanner");
+  if (banner) {
+    const show =
+      desk.source === "static" ||
+      Boolean(desk.sampleDisclaimer) ||
+      (desk.note && String(desk.note).toUpperCase().includes("SAMPLE"));
+    banner.hidden = !show;
+    if (desk.sampleDisclaimer) banner.textContent = desk.sampleDisclaimer;
+  }
 }
 
 function setLive(state, detail) {
