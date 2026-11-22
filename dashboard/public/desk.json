@@ -1,0 +1,134 @@
+{
+  "mode": "paper",
+  "badge": "PAPER",
+  "live": false,
+  "walletControls": false,
+  "startingFundUsd": 100,
+  "ticketUsd": 25,
+  "fund": {
+    "startingFundUsd": 100,
+    "cashUsd": 85,
+    "openExposureUsd": 25,
+    "unrealizedPnlUsd": 0,
+    "realizedPnlUsd": 10,
+    "equityUsd": 110,
+    "returnPctVsFund": 10,
+    "openCount": 1,
+    "closedTrades": 1,
+    "wins": 1,
+    "losses": 0,
+    "flats": 0,
+    "winRate": 100,
+    "dayPnlUsd": 10
+  },
+  "openPositions": [
+    {
+      "mint": "SynthOpenMint11111111111111111111111111",
+      "symbol": "WAVE",
+      "openedAt": "2026-11-22T21:14:15.357Z",
+      "entryUsd": 0.0042,
+      "sizeUsd": 25,
+      "exitRule": "trail_20_after_take_80",
+      "snap": {
+        "devPct": 1.1,
+        "top10CombinedPct": 16,
+        "liqUsd": 72000
+      }
+    }
+  ],
+  "entriesToday": 2,
+  "lastScanAt": "2026-11-22T21:54:15.357Z",
+  "updatedAt": "2026-11-22T21:56:15.357Z",
+  "heliusOptional": true,
+  "marksApplied": false,
+  "recent": [
+    {
+      "time": "2026-11-22T21:54:15.357Z",
+      "kind": "scan",
+      "detail": "paper-signal-scan tick — idle, 1 open, cash=$85"
+    },
+    {
+      "time": "2026-11-22T21:48:15.357Z",
+      "kind": "kill",
+      "mint": "KillMintC1111111111111111111111111111111",
+      "symbol": "LATE",
+      "detail": "kill:too_old,late_zone"
+    },
+    {
+      "time": "2026-11-22T21:14:15.357Z",
+      "kind": "paper_open",
+      "mint": "SynthOpenMint11111111111111111111111111",
+      "symbol": "WAVE",
+      "detail": "paper_open ticket=$25 exit=trail_20_after_take_80",
+      "sizeUsd": 25,
+      "cashUsd": 85,
+      "equityUsd": 110,
+      "openExposureUsd": 25
+    },
+    {
+      "time": "2026-11-22T21:12:15.357Z",
+      "kind": "verdict",
+      "mint": "SynthOpenMint11111111111111111111111111",
+      "symbol": "WAVE",
+      "detail": "judge:buy actionP=0.81 organicP=0.70 exitRisk=2"
+    },
+    {
+      "time": "2026-11-22T21:01:15.357Z",
+      "kind": "paper_close",
+      "mint": "PassMintB111111111111111111111111111111",
+      "symbol": "PASS",
+      "detail": "paper_close +40% trail hit",
+      "sizeUsd": 25,
+      "pnlUsd": 10,
+      "cashUsd": 110,
+      "equityUsd": 110,
+      "openExposureUsd": 0
+    },
+    {
+      "time": "2026-11-22T20:28:15.357Z",
+      "kind": "paper_open",
+      "mint": "PassMintB111111111111111111111111111111",
+      "symbol": "PASS",
+      "detail": "paper_open ticket=$25 exit=trail_20_after_take_80",
+      "sizeUsd": 25,
+      "cashUsd": 75,
+      "equityUsd": 100,
+      "openExposureUsd": 25
+    },
+    {
+      "time": "2026-11-22T20:26:15.357Z",
+      "kind": "verdict",
+      "mint": "PassMintB111111111111111111111111111111",
+      "symbol": "PASS",
+      "detail": "judge:buy actionP=0.78 organicP=0.72 exitRisk=2"
+    },
+    {
+      "time": "2026-11-22T19:56:15.357Z",
+      "kind": "kill",
+      "mint": "KillMintA1111111111111111111111111111111",
+      "symbol": "RUGX",
+      "detail": "kill:dev_pct,lp_unlocked"
+    },
+    {
+      "time": "2026-11-22T19:01:15.357Z",
+      "kind": "kill",
+      "mint": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+      "symbol": "BONK",
+      "detail": "kill:top10,insiders,too_old,mcap_band"
+    },
+    {
+      "time": "2026-11-22T18:56:15.357Z",
+      "kind": "scan",
+      "detail": "paper-signal-scan tick — 6 leads scored"
+    }
+  ],
+  "logCounts": {
+    "total": 10,
+    "kills": 3,
+    "verdicts": 2,
+    "opens": 2,
+    "closes": 1
+  },
+  "note": "Sample PAPER desk state for local dashboard. Replace via POST /api/seed or by writing .data/paper-desk.json.",
+  "source": "static"
+}

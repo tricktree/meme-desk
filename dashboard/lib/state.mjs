@@ -263,7 +263,20 @@ export function buildDashboardPayload(state = loadState()) {
       closes: closes.length,
     },
     note: state.note ?? null,
+    source: "api",
   };
+}
+
+/** Static snapshot for Cursor hosting (no Node API). */
+export function writeStaticDeskJson(publicDir) {
+  const payload = buildDashboardPayload(loadState());
+  payload.source = "static";
+  payload.note =
+    payload.note ||
+    "Sample PAPER desk snapshot for hosted static preview. Local `npm run dashboard` serves live /api/desk.";
+  const out = path.join(publicDir, "desk.json");
+  fs.writeFileSync(out, JSON.stringify(payload, null, 2) + "\n");
+  return out;
 }
 
 export { STATE_PATH, DATA_DIR };

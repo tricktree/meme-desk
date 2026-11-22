@@ -145,13 +145,39 @@ function setLive(state, detail) {
   }
 }
 
-async function refresh() {
+async function readJsonResponse(res) {
+  const ct = (res.headers.get("content-type") || "").toLowerCase();
+  const text = await res.text();
+  const trimmed = text.trim();
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  // Hosted SPA shells often return HTML with 200 for missing API routes.
+  if (ct.includes("text/html") || trimmed.startsWith("<!")) {
+    throw new Error("not_json");
+  }
+  if (!(ct.includes("application/json") || trimmed.startsWith("{") || trimmed.startsWith("["))) {
+    throw new Error("not_json");
+  }
+  return JSON.parse(trimmed);
+}
+
+/** Prefer local Node API; fall back to committed static snapshot for hosting. */
+async function fetchDesk() {
   try {
     const res = await fetch("/api/desk", { cache: "no-store" });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const desk = await res.json();
+    const desk = await readJsonResponse(res);
+    return { desk, source: "api" };
+  } catch {
+    const res = await fetch("/desk.json", { cache: "no-store" });
+    const desk = await readJsonResponse(res);
+    return { desk, source: "static" };
+  }
+}
+
+async function refresh() {
+  try {
+    const { desk, source } = await fetchDesk();
     applyDesk(desk);
-    setLive("ok", "live");
+    setLive("ok", source === "static" ? "sample" : "live");
   } catch (err) {
     setLive("err", "offline");
     console.error(err);
@@ -160,10 +186,3 @@ async function refresh() {
 
 refresh();
 setInterval(refresh, POLL_MS);
-setInterval(() => {
-  // Refresh relative timestamps without waiting for poll.
-  const last = $("#lastScan").textContent;
-  if (last && last !== "—") {
-    // soft re-poll already keeps these fresh; no-op placeholder for motion continuity
-  }
-}, 15_000);
