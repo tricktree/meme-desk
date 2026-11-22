@@ -7,6 +7,7 @@ import {
   bankrollSnapshot,
   defaultExitRule,
   guardOpen,
+  isSolanaMint,
   loadBook,
   money,
   saveBook,
@@ -28,7 +29,8 @@ export default defineTool({
     fund: { startingFundUsd: DESK.startingFundUsd },
   }),
   inputSchema: z.object({
-    mint: z.string().min(1),
+    /** Solana contract address (base58 mint). Never a label like WAVE or PassMint. */
+    mint: z.string().min(32).max(44),
     symbol: z.string().min(1),
     entryUsd: z.number().positive(),
     /** Market cap USD at entry (from DexScreener / facts), when known. */
@@ -42,6 +44,14 @@ export default defineTool({
   async execute(input, ctx) {
     if (DESK.mode !== "paper") {
       return { opened: false, error: "live_mode_disabled_in_v1" };
+    }
+    if (!isSolanaMint(input.mint)) {
+      return {
+        opened: false,
+        error: "invalid_mint_ca",
+        paper: true,
+        hint: "mint must be the Solana base58 contract address from fetch_token_facts, not a symbol or placeholder",
+      };
     }
     const book = await loadBook(ctx.host.kv);
     const sizeUsd = DESK.ticketUsd;

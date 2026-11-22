@@ -23,9 +23,9 @@
   },
   "openPositions": [
     {
-      "mint": "SynthOpenMint11111111111111111111111111",
+      "mint": "VjwWVzn8k9oCY7Bifh1HMvNNVTyRV5WZKXq1YG8KZvBy",
       "symbol": "WAVE",
-      "openedAt": "2026-11-22T21:20:38.556Z",
+      "openedAt": "2026-11-22T21:33:42.631Z",
       "entryUsd": 0.0042,
       "entryMcapUsd": 380000,
       "sizeUsd": 25,
@@ -38,27 +38,27 @@
     }
   ],
   "entriesToday": 2,
-  "lastScanAt": "2026-11-22T22:00:38.556Z",
-  "updatedAt": "2026-11-22T22:02:38.556Z",
+  "lastScanAt": "2026-11-22T22:13:42.631Z",
+  "updatedAt": "2026-11-22T22:15:42.631Z",
   "heliusOptional": true,
   "marksApplied": false,
   "recent": [
     {
-      "time": "2026-11-22T22:00:38.556Z",
+      "time": "2026-11-22T22:13:42.631Z",
       "kind": "scan",
       "detail": "paper-signal-scan tick — idle, 1 open, cash=$85"
     },
     {
-      "time": "2026-11-22T21:54:38.556Z",
+      "time": "2026-11-22T22:07:42.631Z",
       "kind": "kill",
-      "mint": "KillMintC1111111111111111111111111111111",
+      "mint": "fiUbwS6yxSmVSkBPTfKiVy2Kktfkd71n9KqcDmYBh6SC",
       "symbol": "LATE",
       "detail": "kill:too_old,late_zone"
     },
     {
-      "time": "2026-11-22T21:20:38.556Z",
+      "time": "2026-11-22T21:33:42.631Z",
       "kind": "paper_open",
-      "mint": "SynthOpenMint11111111111111111111111111",
+      "mint": "VjwWVzn8k9oCY7Bifh1HMvNNVTyRV5WZKXq1YG8KZvBy",
       "symbol": "WAVE",
       "detail": "paper_open ticket=$25 exit=trail_20_after_take_80",
       "sizeUsd": 25,
@@ -69,16 +69,16 @@
       "entryMcapUsd": 380000
     },
     {
-      "time": "2026-11-22T21:18:38.556Z",
+      "time": "2026-11-22T21:31:42.631Z",
       "kind": "verdict",
-      "mint": "SynthOpenMint11111111111111111111111111",
+      "mint": "VjwWVzn8k9oCY7Bifh1HMvNNVTyRV5WZKXq1YG8KZvBy",
       "symbol": "WAVE",
       "detail": "judge:buy actionP=0.81 organicP=0.70 exitRisk=2"
     },
     {
-      "time": "2026-11-22T21:07:38.556Z",
+      "time": "2026-11-22T21:20:42.631Z",
       "kind": "paper_close",
-      "mint": "PassMintB111111111111111111111111111111",
+      "mint": "pdiZ6FihziEftTm29opMcC7E9qNNhYp5495m4hFvvNkw",
       "symbol": "PASS",
       "detail": "paper_close +40% trail hit",
       "sizeUsd": 25,
@@ -92,9 +92,9 @@
       "exitMcapUsd": 560000
     },
     {
-      "time": "2026-11-22T20:34:38.556Z",
+      "time": "2026-11-22T20:47:42.631Z",
       "kind": "paper_open",
-      "mint": "PassMintB111111111111111111111111111111",
+      "mint": "pdiZ6FihziEftTm29opMcC7E9qNNhYp5495m4hFvvNkw",
       "symbol": "PASS",
       "detail": "paper_open ticket=$25 exit=trail_20_after_take_80",
       "sizeUsd": 25,
@@ -105,28 +105,28 @@
       "entryMcapUsd": 400000
     },
     {
-      "time": "2026-11-22T20:32:38.556Z",
+      "time": "2026-11-22T20:45:42.631Z",
       "kind": "verdict",
-      "mint": "PassMintB111111111111111111111111111111",
+      "mint": "pdiZ6FihziEftTm29opMcC7E9qNNhYp5495m4hFvvNkw",
       "symbol": "PASS",
       "detail": "judge:buy actionP=0.78 organicP=0.72 exitRisk=2"
     },
     {
-      "time": "2026-11-22T20:02:38.556Z",
+      "time": "2026-11-22T20:15:42.631Z",
       "kind": "kill",
-      "mint": "KillMintA1111111111111111111111111111111",
+      "mint": "MqCg1xcVu2dHPqjDrgJ5E6n427tQYUSzpti5C48sHN3U",
       "symbol": "RUGX",
       "detail": "kill:dev_pct,lp_unlocked"
     },
     {
-      "time": "2026-11-22T19:07:38.556Z",
+      "time": "2026-11-22T19:20:42.631Z",
       "kind": "kill",
       "mint": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
       "symbol": "BONK",
       "detail": "kill:top10,insiders,too_old,mcap_band"
     },
     {
-      "time": "2026-11-22T19:02:38.556Z",
+      "time": "2026-11-22T19:15:42.631Z",
       "kind": "scan",
       "detail": "paper-signal-scan tick — 6 leads scored"
     }
@@ -138,6 +138,6 @@
     "opens": 2,
     "closes": 1
   },
-  "note": "Sample PAPER desk state for local dashboard. Replace via POST /api/seed or by writing .data/paper-desk.json.",
+  "note": "Sample PAPER desk snapshot. mint fields are Solana-format CAs (BONK is live; WAVE/PASS/RUGX/LATE are demo). Real paper_open/close record the agent-supplied mint as-is.",
   "source": "static"
 }

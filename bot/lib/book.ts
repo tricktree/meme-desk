@@ -83,6 +83,13 @@ export function money(n: number): number {
   return Math.round(n * 100) / 100;
 }
 
+/** Solana mint / CA: base58, typically 32–44 chars. */
+const MINT_RE = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
+
+export function isSolanaMint(mint: string): boolean {
+  return MINT_RE.test(mint);
+}
+
 function today(): string {
   return new Date().toISOString().slice(0, 10);
 }

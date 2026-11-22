@@ -6,7 +6,7 @@ export default defineEval({
   async test(t) {
     await t.send(
       [
-        "PAPER only. Fixed $100 fund. Run the full entry funnel for mint SynthPassMint111111111111111111111111111 symbol PASS.",
+        "PAPER only. Fixed $100 fund. Run the full entry funnel for mint pdiZ6FihziEftTm29opMcC7E9qNNhYp5495m4hFvvNkw symbol PASS.",
         "Do NOT call fetch_token_facts. Use these measured facts for hard_kill_check:",
         "mintAuthorityEnabled=false, freezeAuthorityEnabled=false, lpLockedOrBurned=true,",
         "top10PctExPool=15, devPct=1, insiders=0, liquidityUsd=90000, ageMin=120, riskScore=8,",

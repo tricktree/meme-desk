@@ -26,10 +26,20 @@ function mcap(n) {
   return money(n);
 }
 
+const BASE58_RE = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
+
 function shortCa(mint) {
   if (!mint) return "";
-  if (mint.length <= 12) return mint;
-  return `${mint.slice(0, 4)}…${mint.slice(-4)}`;
+  if (mint.length <= 14) return mint;
+  // Prefer 6…6 so Solana CAs stay recognizable (avoids label-like Pass…1111).
+  return `${mint.slice(0, 6)}…${mint.slice(-6)}`;
+}
+
+function caLabel(mint) {
+  if (!mint) return "";
+  const shown = shortCa(mint);
+  const warn = BASE58_RE.test(mint) ? "" : " (invalid mint)";
+  return `CA ${shown}${warn}`;
 }
 
 function pct(n) {
@@ -78,7 +88,7 @@ function renderPositions(positions) {
         <div class="muted">${escapeHtml(p.exitRule || "")} · entry ${price(p.entryUsd)}${
           p.entryMcapUsd != null ? ` · mcap ${mcap(p.entryMcapUsd)}` : ""
         }</div>
-        <div class="mint" title="${escapeHtml(p.mint || "")}">CA ${escapeHtml(p.mint || "")}</div>
+        <div class="mint" title="${escapeHtml(p.mint || "")}">${escapeHtml(caLabel(p.mint))}<span class="mint-full"> · ${escapeHtml(p.mint || "")}</span></div>
       </li>`,
     )
     .join("");
@@ -88,7 +98,7 @@ function tradeMeta(l) {
   const bits = [];
   if (l.mint) {
     bits.push(
-      `<span class="ca" title="${escapeHtml(l.mint)}">CA ${escapeHtml(shortCa(l.mint))}</span>`,
+      `<span class="ca" title="${escapeHtml(l.mint)}">${escapeHtml(caLabel(l.mint))}</span>`,
     );
   }
   if (typeof l.entryUsd === "number" || typeof l.entryMcapUsd === "number") {

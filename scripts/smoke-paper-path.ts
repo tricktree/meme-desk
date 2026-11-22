@@ -65,7 +65,7 @@ async function main() {
   };
 
   // 2) Synthetic survivor → judge → paper open/close vs $100 fund
-  const mint = "PaperSmokeMint1111111111111111111111111111";
+  const mint = "pdiZ6FihziEftTm29opMcC7E9qNNhYp5495m4hFvvNkw";
   const facts = {
     mintAuthorityEnabled: false,
     freezeAuthorityEnabled: false,

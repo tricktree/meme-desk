@@ -39,6 +39,15 @@ function emptyBook() {
   };
 }
 
+/** Demo Solana-format mints (base58). Real paper_open/close log the live CA as-is. */
+const DEMO = {
+  bonk: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+  wave: "VjwWVzn8k9oCY7Bifh1HMvNNVTyRV5WZKXq1YG8KZvBy",
+  pass: "pdiZ6FihziEftTm29opMcC7E9qNNhYp5495m4hFvvNkw",
+  rugx: "MqCg1xcVu2dHPqjDrgJ5E6n427tQYUSzpti5C48sHN3U",
+  late: "fiUbwS6yxSmVSkBPTfKiVy2Kktfkd71n9KqcDmYBh6SC",
+};
+
 export function bankrollSnapshot(book, marks = {}) {
   let markValue = 0;
   let cost = 0;
@@ -87,8 +96,8 @@ function defaultState() {
   book.dayPnlUsd = 10;
   book.entriesToday = 2;
   book.positions = {
-    SynthOpenMint11111111111111111111111111: {
-      mint: "SynthOpenMint11111111111111111111111111",
+    [DEMO.wave]: {
+      mint: DEMO.wave,
       symbol: "WAVE",
       openedAt: t(42),
       entryUsd: 0.0042,
@@ -108,28 +117,28 @@ function defaultState() {
     {
       time: t(175),
       kind: "kill",
-      mint: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+      mint: DEMO.bonk,
       symbol: "BONK",
       detail: "kill:top10,insiders,too_old,mcap_band",
     },
     {
       time: t(120),
       kind: "kill",
-      mint: "KillMintA1111111111111111111111111111111",
+      mint: DEMO.rugx,
       symbol: "RUGX",
       detail: "kill:dev_pct,lp_unlocked",
     },
     {
       time: t(90),
       kind: "verdict",
-      mint: "PassMintB111111111111111111111111111111",
+      mint: DEMO.pass,
       symbol: "PASS",
       detail: "judge:buy actionP=0.78 organicP=0.72 exitRisk=2",
     },
     {
       time: t(88),
       kind: "paper_open",
-      mint: "PassMintB111111111111111111111111111111",
+      mint: DEMO.pass,
       symbol: "PASS",
       detail: "paper_open ticket=$25 exit=trail_20_after_take_80",
       sizeUsd: 25,
@@ -142,7 +151,7 @@ function defaultState() {
     {
       time: t(55),
       kind: "paper_close",
-      mint: "PassMintB111111111111111111111111111111",
+      mint: DEMO.pass,
       symbol: "PASS",
       detail: "paper_close +40% trail hit",
       sizeUsd: 25,
@@ -158,14 +167,14 @@ function defaultState() {
     {
       time: t(44),
       kind: "verdict",
-      mint: "SynthOpenMint11111111111111111111111111",
+      mint: DEMO.wave,
       symbol: "WAVE",
       detail: "judge:buy actionP=0.81 organicP=0.70 exitRisk=2",
     },
     {
       time: t(42),
       kind: "paper_open",
-      mint: "SynthOpenMint11111111111111111111111111",
+      mint: DEMO.wave,
       symbol: "WAVE",
       detail: "paper_open ticket=$25 exit=trail_20_after_take_80",
       sizeUsd: 25,
@@ -178,7 +187,7 @@ function defaultState() {
     {
       time: t(8),
       kind: "kill",
-      mint: "KillMintC1111111111111111111111111111111",
+      mint: DEMO.late,
       symbol: "LATE",
       detail: "kill:too_old,late_zone",
     },
@@ -189,8 +198,7 @@ function defaultState() {
     },
   ];
 
-  // Align cash with open exposure after close+reopen: started 100, +10 realized, -25 open → 85
-  // Wait: after close cash was 110, then open WAVE for 25 → cash 85. Seed above said 75 — fix.
+  // After close cash=110, then open WAVE $25 → cash 85.
   book.cashUsd = 85;
 
   return {
@@ -202,7 +210,7 @@ function defaultState() {
     lastScanAt: t(2),
     updatedAt: new Date().toISOString(),
     marks: {},
-    note: "Sample PAPER desk state for local dashboard. Replace via POST /api/seed or by writing .data/paper-desk.json.",
+    note: "Sample PAPER desk snapshot. mint fields are Solana-format CAs (BONK is live; WAVE/PASS/RUGX/LATE are demo). Real paper_open/close record the agent-supplied mint as-is.",
   };
 }
 

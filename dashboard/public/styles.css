@@ -449,6 +449,10 @@ body {
   white-space: nowrap;
 }
 
+.mint-full {
+  color: var(--mist);
+}
+
 .kind {
   display: inline-block;
   min-width: 5.5rem;

@@ -4,6 +4,7 @@ import * as z from "zod/v4";
 import {
   appendLog,
   bankrollSnapshot,
+  isSolanaMint,
   loadBook,
   money,
   saveBook,
@@ -24,13 +25,22 @@ export default defineTool({
     stub: "dry_run",
   }),
   inputSchema: z.object({
-    mint: z.string().min(1),
+    /** Solana contract address (base58 mint) of the open paper position. */
+    mint: z.string().min(32).max(44),
     markUsd: z.number().positive(),
     /** Market cap USD at exit / mark, when known. */
     exitMcapUsd: z.number().positive().optional(),
     reason: z.string().min(1),
   }),
   async execute(input, ctx) {
+    if (!isSolanaMint(input.mint)) {
+      return {
+        closed: false,
+        error: "invalid_mint_ca",
+        paper: true,
+        hint: "mint must be the Solana base58 contract address, not a symbol or placeholder",
+      };
+    }
     const book = await loadBook(ctx.host.kv);
     const pos = book.positions[input.mint];
     if (!pos) {

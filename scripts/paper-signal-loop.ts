@@ -82,9 +82,10 @@ async function liveKillPath() {
 }
 
 async function syntheticOpenClosePath() {
-  const mint = "SynthPassMint111111111111111111111111111";
+  const mint = "pdiZ6FihziEftTm29opMcC7E9qNNhYp5495m4hFvvNkw";
   const symbol = "PASS";
   const entryUsd = 0.01;
+  const entryMcapUsd = 400_000;
   const facts = {
     mintAuthorityEnabled: false,
     freezeAuthorityEnabled: false,
@@ -156,6 +157,7 @@ async function syntheticOpenClosePath() {
     symbol,
     openedAt: new Date().toISOString(),
     entryUsd,
+    entryMcapUsd,
     sizeUsd: size,
     exitRule,
     snap: { devPct: 1, top10CombinedPct: 15, liqUsd: 90_000 },
@@ -173,10 +175,13 @@ async function syntheticOpenClosePath() {
     equityUsd: afterOpen.equityUsd,
     openExposureUsd: afterOpen.openExposureUsd,
     pnlUsd: 0,
+    entryUsd,
+    entryMcapUsd,
   });
 
   // Close at +40% mark
   const markUsd = entryUsd * 1.4;
+  const exitMcapUsd = entryMcapUsd * 1.4;
   const pos = book.positions[mint]!;
   const tradePnlUsd = money(((markUsd - pos.entryUsd) / pos.entryUsd) * pos.sizeUsd);
   book.cashUsd = money(book.cashUsd + pos.sizeUsd + tradePnlUsd);
@@ -196,6 +201,10 @@ async function syntheticOpenClosePath() {
     cashUsd: afterClose.cashUsd,
     equityUsd: afterClose.equityUsd,
     openExposureUsd: afterClose.openExposureUsd,
+    entryUsd,
+    exitUsd: markUsd,
+    entryMcapUsd,
+    exitMcapUsd,
   });
 
   const deskReport = {
