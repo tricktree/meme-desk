@@ -65,7 +65,8 @@ async function main() {
   };
 
   // 2) Synthetic survivor → judge → paper open/close vs $100 fund
-  const mint = "pdiZ6FihziEftTm29opMcC7E9qNNhYp5495m4hFvvNkw";
+  // Real POPCAT mint — synthetic facts only; smoke does not require live price.
+  const mint = "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr";
   const facts = {
     mintAuthorityEnabled: false,
     freezeAuthorityEnabled: false,

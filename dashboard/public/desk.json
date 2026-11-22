@@ -23,110 +23,110 @@
   },
   "openPositions": [
     {
-      "mint": "VjwWVzn8k9oCY7Bifh1HMvNNVTyRV5WZKXq1YG8KZvBy",
-      "symbol": "WAVE",
-      "openedAt": "2026-11-22T21:33:42.631Z",
-      "entryUsd": 0.0042,
-      "entryMcapUsd": 380000,
+      "mint": "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
+      "symbol": "WIF",
+      "openedAt": "2026-11-22T21:42:28.065Z",
+      "entryUsd": 1.85,
+      "entryMcapUsd": 1850000000,
       "sizeUsd": 25,
       "exitRule": "trail_20_after_take_80",
       "snap": {
-        "devPct": 1.1,
-        "top10CombinedPct": 16,
-        "liqUsd": 72000
+        "devPct": 0,
+        "top10CombinedPct": 18,
+        "liqUsd": 12000000
       }
     }
   ],
   "entriesToday": 2,
-  "lastScanAt": "2026-11-22T22:13:42.631Z",
-  "updatedAt": "2026-11-22T22:15:42.631Z",
+  "lastScanAt": "2026-11-22T22:22:28.065Z",
+  "updatedAt": "2026-11-22T22:24:28.066Z",
   "heliusOptional": true,
   "marksApplied": false,
   "recent": [
     {
-      "time": "2026-11-22T22:13:42.631Z",
+      "time": "2026-11-22T22:22:28.065Z",
       "kind": "scan",
       "detail": "paper-signal-scan tick — idle, 1 open, cash=$85"
     },
     {
-      "time": "2026-11-22T22:07:42.631Z",
+      "time": "2026-11-22T22:16:28.065Z",
       "kind": "kill",
-      "mint": "fiUbwS6yxSmVSkBPTfKiVy2Kktfkd71n9KqcDmYBh6SC",
-      "symbol": "LATE",
+      "mint": "2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv",
+      "symbol": "PENGU",
       "detail": "kill:too_old,late_zone"
     },
     {
-      "time": "2026-11-22T21:33:42.631Z",
+      "time": "2026-11-22T21:42:28.065Z",
       "kind": "paper_open",
-      "mint": "VjwWVzn8k9oCY7Bifh1HMvNNVTyRV5WZKXq1YG8KZvBy",
-      "symbol": "WAVE",
+      "mint": "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
+      "symbol": "WIF",
       "detail": "paper_open ticket=$25 exit=trail_20_after_take_80",
       "sizeUsd": 25,
       "cashUsd": 85,
       "equityUsd": 110,
       "openExposureUsd": 25,
-      "entryUsd": 0.0042,
-      "entryMcapUsd": 380000
+      "entryUsd": 1.85,
+      "entryMcapUsd": 1850000000
     },
     {
-      "time": "2026-11-22T21:31:42.631Z",
+      "time": "2026-11-22T21:40:28.065Z",
       "kind": "verdict",
-      "mint": "VjwWVzn8k9oCY7Bifh1HMvNNVTyRV5WZKXq1YG8KZvBy",
-      "symbol": "WAVE",
+      "mint": "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
+      "symbol": "WIF",
       "detail": "judge:buy actionP=0.81 organicP=0.70 exitRisk=2"
     },
     {
-      "time": "2026-11-22T21:20:42.631Z",
+      "time": "2026-11-22T21:29:28.065Z",
       "kind": "paper_close",
-      "mint": "pdiZ6FihziEftTm29opMcC7E9qNNhYp5495m4hFvvNkw",
-      "symbol": "PASS",
+      "mint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+      "symbol": "POPCAT",
       "detail": "paper_close +40% trail hit",
       "sizeUsd": 25,
       "pnlUsd": 10,
       "cashUsd": 110,
       "equityUsd": 110,
       "openExposureUsd": 0,
-      "entryUsd": 0.01,
-      "exitUsd": 0.014,
-      "entryMcapUsd": 400000,
-      "exitMcapUsd": 560000
+      "entryUsd": 0.42,
+      "exitUsd": 0.588,
+      "entryMcapUsd": 420000000,
+      "exitMcapUsd": 588000000
     },
     {
-      "time": "2026-11-22T20:47:42.631Z",
+      "time": "2026-11-22T20:56:28.065Z",
       "kind": "paper_open",
-      "mint": "pdiZ6FihziEftTm29opMcC7E9qNNhYp5495m4hFvvNkw",
-      "symbol": "PASS",
+      "mint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+      "symbol": "POPCAT",
       "detail": "paper_open ticket=$25 exit=trail_20_after_take_80",
       "sizeUsd": 25,
       "cashUsd": 75,
       "equityUsd": 100,
       "openExposureUsd": 25,
-      "entryUsd": 0.01,
-      "entryMcapUsd": 400000
+      "entryUsd": 0.42,
+      "entryMcapUsd": 420000000
     },
     {
-      "time": "2026-11-22T20:45:42.631Z",
+      "time": "2026-11-22T20:54:28.065Z",
       "kind": "verdict",
-      "mint": "pdiZ6FihziEftTm29opMcC7E9qNNhYp5495m4hFvvNkw",
-      "symbol": "PASS",
+      "mint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+      "symbol": "POPCAT",
       "detail": "judge:buy actionP=0.78 organicP=0.72 exitRisk=2"
     },
     {
-      "time": "2026-11-22T20:15:42.631Z",
+      "time": "2026-11-22T20:24:28.065Z",
       "kind": "kill",
-      "mint": "MqCg1xcVu2dHPqjDrgJ5E6n427tQYUSzpti5C48sHN3U",
-      "symbol": "RUGX",
+      "mint": "9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
+      "symbol": "FARTCOIN",
       "detail": "kill:dev_pct,lp_unlocked"
     },
     {
-      "time": "2026-11-22T19:20:42.631Z",
+      "time": "2026-11-22T19:29:28.065Z",
       "kind": "kill",
       "mint": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
       "symbol": "BONK",
       "detail": "kill:top10,insiders,too_old,mcap_band"
     },
     {
-      "time": "2026-11-22T19:15:42.631Z",
+      "time": "2026-11-22T19:24:28.065Z",
       "kind": "scan",
       "detail": "paper-signal-scan tick — 6 leads scored"
     }
@@ -138,6 +138,6 @@
     "opens": 2,
     "closes": 1
   },
-  "note": "Sample PAPER desk snapshot. mint fields are Solana-format CAs (BONK is live; WAVE/PASS/RUGX/LATE are demo). Real paper_open/close record the agent-supplied mint as-is.",
+  "note": "Sample PAPER desk snapshot using real Solana token mint CAs (BONK/WIF/POPCAT/FARTCOIN/PENGU) so CA lookups resolve as tokens. PnL figures are synthetic paper fills. Live paper_open/close record the agent-supplied mint as-is.",
   "source": "static"
 }

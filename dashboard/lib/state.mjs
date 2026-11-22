@@ -39,13 +39,34 @@ function emptyBook() {
   };
 }
 
-/** Demo Solana-format mints (base58). Real paper_open/close log the live CA as-is. */
+/**
+ * Sample tape uses real Solana token mint CAs (lookup as tokens on Axiom/DexScreener).
+ * Random base58 pubkeys resolve as empty wallets — never invent mint strings.
+ * Real paper_open/close still log whatever live CA the agent passes.
+ */
 const DEMO = {
-  bonk: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
-  wave: "VjwWVzn8k9oCY7Bifh1HMvNNVTyRV5WZKXq1YG8KZvBy",
-  pass: "pdiZ6FihziEftTm29opMcC7E9qNNhYp5495m4hFvvNkw",
-  rugx: "MqCg1xcVu2dHPqjDrgJ5E6n427tQYUSzpti5C48sHN3U",
-  late: "fiUbwS6yxSmVSkBPTfKiVy2Kktfkd71n9KqcDmYBh6SC",
+  bonk: {
+    mint: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+    symbol: "BONK",
+  },
+  /** Open paper ticket in the sample book. */
+  wif: {
+    mint: "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
+    symbol: "WIF",
+  },
+  /** Closed +40% sample trade. */
+  popcat: {
+    mint: "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+    symbol: "POPCAT",
+  },
+  fartcoin: {
+    mint: "9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
+    symbol: "FARTCOIN",
+  },
+  pengu: {
+    mint: "2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv",
+    symbol: "PENGU",
+  },
 };
 
 export function bankrollSnapshot(book, marks = {}) {
@@ -96,15 +117,15 @@ function defaultState() {
   book.dayPnlUsd = 10;
   book.entriesToday = 2;
   book.positions = {
-    [DEMO.wave]: {
-      mint: DEMO.wave,
-      symbol: "WAVE",
+    [DEMO.wif.mint]: {
+      mint: DEMO.wif.mint,
+      symbol: DEMO.wif.symbol,
       openedAt: t(42),
-      entryUsd: 0.0042,
-      entryMcapUsd: 380_000,
+      entryUsd: 1.85,
+      entryMcapUsd: 1_850_000_000,
       sizeUsd: 25,
       exitRule: "trail_20_after_take_80",
-      snap: { devPct: 1.1, top10CombinedPct: 16, liqUsd: 72_000 },
+      snap: { devPct: 0, top10CombinedPct: 18, liqUsd: 12_000_000 },
     },
   };
 
@@ -117,78 +138,78 @@ function defaultState() {
     {
       time: t(175),
       kind: "kill",
-      mint: DEMO.bonk,
-      symbol: "BONK",
+      mint: DEMO.bonk.mint,
+      symbol: DEMO.bonk.symbol,
       detail: "kill:top10,insiders,too_old,mcap_band",
     },
     {
       time: t(120),
       kind: "kill",
-      mint: DEMO.rugx,
-      symbol: "RUGX",
+      mint: DEMO.fartcoin.mint,
+      symbol: DEMO.fartcoin.symbol,
       detail: "kill:dev_pct,lp_unlocked",
     },
     {
       time: t(90),
       kind: "verdict",
-      mint: DEMO.pass,
-      symbol: "PASS",
+      mint: DEMO.popcat.mint,
+      symbol: DEMO.popcat.symbol,
       detail: "judge:buy actionP=0.78 organicP=0.72 exitRisk=2",
     },
     {
       time: t(88),
       kind: "paper_open",
-      mint: DEMO.pass,
-      symbol: "PASS",
+      mint: DEMO.popcat.mint,
+      symbol: DEMO.popcat.symbol,
       detail: "paper_open ticket=$25 exit=trail_20_after_take_80",
       sizeUsd: 25,
       cashUsd: 75,
       equityUsd: 100,
       openExposureUsd: 25,
-      entryUsd: 0.01,
-      entryMcapUsd: 400_000,
+      entryUsd: 0.42,
+      entryMcapUsd: 420_000_000,
     },
     {
       time: t(55),
       kind: "paper_close",
-      mint: DEMO.pass,
-      symbol: "PASS",
+      mint: DEMO.popcat.mint,
+      symbol: DEMO.popcat.symbol,
       detail: "paper_close +40% trail hit",
       sizeUsd: 25,
       pnlUsd: 10,
       cashUsd: 110,
       equityUsd: 110,
       openExposureUsd: 0,
-      entryUsd: 0.01,
-      exitUsd: 0.014,
-      entryMcapUsd: 400_000,
-      exitMcapUsd: 560_000,
+      entryUsd: 0.42,
+      exitUsd: 0.588,
+      entryMcapUsd: 420_000_000,
+      exitMcapUsd: 588_000_000,
     },
     {
       time: t(44),
       kind: "verdict",
-      mint: DEMO.wave,
-      symbol: "WAVE",
+      mint: DEMO.wif.mint,
+      symbol: DEMO.wif.symbol,
       detail: "judge:buy actionP=0.81 organicP=0.70 exitRisk=2",
     },
     {
       time: t(42),
       kind: "paper_open",
-      mint: DEMO.wave,
-      symbol: "WAVE",
+      mint: DEMO.wif.mint,
+      symbol: DEMO.wif.symbol,
       detail: "paper_open ticket=$25 exit=trail_20_after_take_80",
       sizeUsd: 25,
       cashUsd: 85,
       equityUsd: 110,
       openExposureUsd: 25,
-      entryUsd: 0.0042,
-      entryMcapUsd: 380_000,
+      entryUsd: 1.85,
+      entryMcapUsd: 1_850_000_000,
     },
     {
       time: t(8),
       kind: "kill",
-      mint: DEMO.late,
-      symbol: "LATE",
+      mint: DEMO.pengu.mint,
+      symbol: DEMO.pengu.symbol,
       detail: "kill:too_old,late_zone",
     },
     {
@@ -198,7 +219,7 @@ function defaultState() {
     },
   ];
 
-  // After close cash=110, then open WAVE $25 → cash 85.
+  // After close cash=110, then open WIF $25 → cash 85.
   book.cashUsd = 85;
 
   return {
@@ -210,7 +231,7 @@ function defaultState() {
     lastScanAt: t(2),
     updatedAt: new Date().toISOString(),
     marks: {},
-    note: "Sample PAPER desk snapshot. mint fields are Solana-format CAs (BONK is live; WAVE/PASS/RUGX/LATE are demo). Real paper_open/close record the agent-supplied mint as-is.",
+    note: "Sample PAPER desk snapshot using real Solana token mint CAs (BONK/WIF/POPCAT/FARTCOIN/PENGU) so CA lookups resolve as tokens. PnL figures are synthetic paper fills. Live paper_open/close record the agent-supplied mint as-is.",
   };
 }
 

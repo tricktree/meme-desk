@@ -82,8 +82,9 @@ async function liveKillPath() {
 }
 
 async function syntheticOpenClosePath() {
-  const mint = "pdiZ6FihziEftTm29opMcC7E9qNNhYp5495m4hFvvNkw";
-  const symbol = "PASS";
+  // Real POPCAT mint CA (token, not a wallet pubkey) for synthetic gate/open/close path.
+  const mint = "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr";
+  const symbol = "POPCAT";
   const entryUsd = 0.01;
   const entryMcapUsd = 400_000;
   const facts = {
