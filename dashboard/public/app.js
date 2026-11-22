@@ -28,18 +28,30 @@ function mcap(n) {
 
 const BASE58_RE = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
 
-function shortCa(mint) {
+/** Full mint CA for desk tape (copyable). */
+function fullCaLabel(mint) {
   if (!mint) return "";
-  if (mint.length <= 14) return mint;
-  // Prefer 6…6 so Solana CAs stay recognizable (avoids label-like Pass…1111).
-  return `${mint.slice(0, 6)}…${mint.slice(-6)}`;
+  const warn = BASE58_RE.test(mint) ? "" : " (invalid mint)";
+  return `CA ${mint}${warn}`;
 }
 
-function caLabel(mint) {
-  if (!mint) return "";
-  const shown = shortCa(mint);
-  const warn = BASE58_RE.test(mint) ? "" : " (invalid mint)";
-  return `CA ${shown}${warn}`;
+/** Entry (buy) / exit (sell) rows show absolute UTC, not relative. */
+function isEntryOrExit(kind) {
+  return kind === "paper_open" || kind === "paper_close";
+}
+
+function utcTime(iso) {
+  if (!iso) return "—";
+  const t = Date.parse(iso);
+  if (Number.isNaN(t)) return "—";
+  const d = new Date(t);
+  // YYYY-MM-DD HH:MM:SS UTC
+  return `${d.toISOString().replace("T", " ").replace(/\.\d{3}Z$/, "")} UTC`;
+}
+
+function tapeTimeLabel(l) {
+  if (isEntryOrExit(l.kind)) return utcTime(l.time);
+  return relTime(l.time);
 }
 
 function pct(n) {
@@ -88,7 +100,7 @@ function renderPositions(positions) {
         <div class="muted">${escapeHtml(p.exitRule || "")} · entry ${price(p.entryUsd)}${
           p.entryMcapUsd != null ? ` · mcap ${mcap(p.entryMcapUsd)}` : ""
         }</div>
-        <div class="mint" title="${escapeHtml(p.mint || "")}">${escapeHtml(caLabel(p.mint))}<span class="mint-full"> · ${escapeHtml(p.mint || "")}</span></div>
+        <div class="mint" title="${escapeHtml(p.mint || "")}">${escapeHtml(fullCaLabel(p.mint))}</div>
       </li>`,
     )
     .join("");
@@ -98,7 +110,7 @@ function tradeMeta(l) {
   const bits = [];
   if (l.mint) {
     bits.push(
-      `<span class="ca" title="${escapeHtml(l.mint)}">${escapeHtml(caLabel(l.mint))}</span>`,
+      `<span class="ca">${escapeHtml(fullCaLabel(l.mint))}</span>`,
     );
   }
   if (typeof l.entryUsd === "number" || typeof l.entryMcapUsd === "number") {
@@ -136,7 +148,7 @@ function renderTape(rows) {
         <li>
           <div class="tape-top">
             <span><span class="kind ${kind}">${kind}</span><span class="sym">${escapeHtml(l.symbol || "")}</span></span>
-            <span class="muted">${relTime(l.time)}</span>
+            <span class="muted${isEntryOrExit(l.kind) ? " time-utc" : ""}" title="${escapeHtml(l.time || "")}">${escapeHtml(tapeTimeLabel(l))}</span>
           </div>
           <div class="tape-detail">${escapeHtml(l.detail || "")}</div>
           ${tradeMeta(l)}

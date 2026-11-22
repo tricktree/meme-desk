@@ -442,15 +442,10 @@ body {
 
 .mint {
   margin-top: 0.25rem;
-  color: var(--mist-dim);
-  font-size: 0.68rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.mint-full {
   color: var(--mist);
+  font-size: 0.68rem;
+  word-break: break-all;
+  white-space: normal;
 }
 
 .kind {
@@ -488,12 +483,19 @@ body {
   margin-top: 0.28rem;
   color: var(--mist-dim);
   font-size: 0.72rem;
-  line-height: 1.4;
-  word-break: break-word;
+  line-height: 1.45;
+  word-break: break-all;
 }
 
 .tape-meta .ca {
   color: var(--mist);
+  font-variant-ligatures: none;
+}
+
+.time-utc {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 .empty {
