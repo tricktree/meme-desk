@@ -25,8 +25,9 @@
     {
       "mint": "SynthOpenMint11111111111111111111111111",
       "symbol": "WAVE",
-      "openedAt": "2026-11-22T21:14:15.357Z",
+      "openedAt": "2026-11-22T21:20:38.556Z",
       "entryUsd": 0.0042,
+      "entryMcapUsd": 380000,
       "sizeUsd": 25,
       "exitRule": "trail_20_after_take_80",
       "snap": {
@@ -37,25 +38,25 @@
     }
   ],
   "entriesToday": 2,
-  "lastScanAt": "2026-11-22T21:54:15.357Z",
-  "updatedAt": "2026-11-22T21:56:15.357Z",
+  "lastScanAt": "2026-11-22T22:00:38.556Z",
+  "updatedAt": "2026-11-22T22:02:38.556Z",
   "heliusOptional": true,
   "marksApplied": false,
   "recent": [
     {
-      "time": "2026-11-22T21:54:15.357Z",
+      "time": "2026-11-22T22:00:38.556Z",
       "kind": "scan",
       "detail": "paper-signal-scan tick — idle, 1 open, cash=$85"
     },
     {
-      "time": "2026-11-22T21:48:15.357Z",
+      "time": "2026-11-22T21:54:38.556Z",
       "kind": "kill",
       "mint": "KillMintC1111111111111111111111111111111",
       "symbol": "LATE",
       "detail": "kill:too_old,late_zone"
     },
     {
-      "time": "2026-11-22T21:14:15.357Z",
+      "time": "2026-11-22T21:20:38.556Z",
       "kind": "paper_open",
       "mint": "SynthOpenMint11111111111111111111111111",
       "symbol": "WAVE",
@@ -63,17 +64,19 @@
       "sizeUsd": 25,
       "cashUsd": 85,
       "equityUsd": 110,
-      "openExposureUsd": 25
+      "openExposureUsd": 25,
+      "entryUsd": 0.0042,
+      "entryMcapUsd": 380000
     },
     {
-      "time": "2026-11-22T21:12:15.357Z",
+      "time": "2026-11-22T21:18:38.556Z",
       "kind": "verdict",
       "mint": "SynthOpenMint11111111111111111111111111",
       "symbol": "WAVE",
       "detail": "judge:buy actionP=0.81 organicP=0.70 exitRisk=2"
     },
     {
-      "time": "2026-11-22T21:01:15.357Z",
+      "time": "2026-11-22T21:07:38.556Z",
       "kind": "paper_close",
       "mint": "PassMintB111111111111111111111111111111",
       "symbol": "PASS",
@@ -82,10 +85,14 @@
       "pnlUsd": 10,
       "cashUsd": 110,
       "equityUsd": 110,
-      "openExposureUsd": 0
+      "openExposureUsd": 0,
+      "entryUsd": 0.01,
+      "exitUsd": 0.014,
+      "entryMcapUsd": 400000,
+      "exitMcapUsd": 560000
     },
     {
-      "time": "2026-11-22T20:28:15.357Z",
+      "time": "2026-11-22T20:34:38.556Z",
       "kind": "paper_open",
       "mint": "PassMintB111111111111111111111111111111",
       "symbol": "PASS",
@@ -93,31 +100,33 @@
       "sizeUsd": 25,
       "cashUsd": 75,
       "equityUsd": 100,
-      "openExposureUsd": 25
+      "openExposureUsd": 25,
+      "entryUsd": 0.01,
+      "entryMcapUsd": 400000
     },
     {
-      "time": "2026-11-22T20:26:15.357Z",
+      "time": "2026-11-22T20:32:38.556Z",
       "kind": "verdict",
       "mint": "PassMintB111111111111111111111111111111",
       "symbol": "PASS",
       "detail": "judge:buy actionP=0.78 organicP=0.72 exitRisk=2"
     },
     {
-      "time": "2026-11-22T19:56:15.357Z",
+      "time": "2026-11-22T20:02:38.556Z",
       "kind": "kill",
       "mint": "KillMintA1111111111111111111111111111111",
       "symbol": "RUGX",
       "detail": "kill:dev_pct,lp_unlocked"
     },
     {
-      "time": "2026-11-22T19:01:15.357Z",
+      "time": "2026-11-22T19:07:38.556Z",
       "kind": "kill",
       "mint": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
       "symbol": "BONK",
       "detail": "kill:top10,insiders,too_old,mcap_band"
     },
     {
-      "time": "2026-11-22T18:56:15.357Z",
+      "time": "2026-11-22T19:02:38.556Z",
       "kind": "scan",
       "detail": "paper-signal-scan tick — 6 leads scored"
     }

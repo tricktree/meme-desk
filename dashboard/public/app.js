@@ -11,6 +11,27 @@ function money(n) {
   return `${n < 0 ? "-" : ""}$${abs}`;
 }
 
+function price(n) {
+  if (n == null || Number.isNaN(n)) return "—";
+  if (n >= 1) return money(n);
+  const s = n.toPrecision(4);
+  return `$${s.replace(/\.?0+$/, "")}`;
+}
+
+function mcap(n) {
+  if (n == null || Number.isNaN(n)) return "—";
+  const abs = Math.abs(n);
+  if (abs >= 1_000_000) return `$${(n / 1_000_000).toFixed(2)}M`;
+  if (abs >= 1_000) return `$${(n / 1_000).toFixed(1)}k`;
+  return money(n);
+}
+
+function shortCa(mint) {
+  if (!mint) return "";
+  if (mint.length <= 12) return mint;
+  return `${mint.slice(0, 4)}…${mint.slice(-4)}`;
+}
+
 function pct(n) {
   if (n == null || Number.isNaN(n)) return "—";
   const sign = n > 0 ? "+" : "";
@@ -54,11 +75,41 @@ function renderPositions(positions) {
           <span class="sym">${escapeHtml(p.symbol || "—")}</span>
           <span>${money(p.sizeUsd)}</span>
         </div>
-        <div class="muted">${escapeHtml(p.exitRule || "")} · entry ${money(p.entryUsd)}</div>
-        <div class="mint" title="${escapeHtml(p.mint || "")}">${escapeHtml(p.mint || "")}</div>
+        <div class="muted">${escapeHtml(p.exitRule || "")} · entry ${price(p.entryUsd)}${
+          p.entryMcapUsd != null ? ` · mcap ${mcap(p.entryMcapUsd)}` : ""
+        }</div>
+        <div class="mint" title="${escapeHtml(p.mint || "")}">CA ${escapeHtml(p.mint || "")}</div>
       </li>`,
     )
     .join("");
+}
+
+function tradeMeta(l) {
+  const bits = [];
+  if (l.mint) {
+    bits.push(
+      `<span class="ca" title="${escapeHtml(l.mint)}">CA ${escapeHtml(shortCa(l.mint))}</span>`,
+    );
+  }
+  if (typeof l.entryUsd === "number" || typeof l.entryMcapUsd === "number") {
+    bits.push(
+      `entry ${price(l.entryUsd)}${
+        l.entryMcapUsd != null ? ` / mcap ${mcap(l.entryMcapUsd)}` : ""
+      }`,
+    );
+  }
+  if (typeof l.exitUsd === "number" || typeof l.exitMcapUsd === "number") {
+    bits.push(
+      `exit ${price(l.exitUsd)}${
+        l.exitMcapUsd != null ? ` / mcap ${mcap(l.exitMcapUsd)}` : ""
+      }`,
+    );
+  }
+  if (typeof l.pnlUsd === "number") bits.push(`pnl ${money(l.pnlUsd)}`);
+  else if (typeof l.sizeUsd === "number" && l.kind === "paper_open") {
+    bits.push(`size ${money(l.sizeUsd)}`);
+  }
+  return bits.length ? `<div class="tape-meta">${bits.join(" · ")}</div>` : "";
 }
 
 function renderTape(rows) {
@@ -71,19 +122,14 @@ function renderTape(rows) {
     .slice(0, 28)
     .map((l) => {
       const kind = escapeHtml(l.kind || "note");
-      const pnl =
-        typeof l.pnlUsd === "number"
-          ? ` · pnl ${money(l.pnlUsd)}`
-          : typeof l.sizeUsd === "number"
-            ? ` · size ${money(l.sizeUsd)}`
-            : "";
       return `
         <li>
           <div class="tape-top">
             <span><span class="kind ${kind}">${kind}</span><span class="sym">${escapeHtml(l.symbol || "")}</span></span>
             <span class="muted">${relTime(l.time)}</span>
           </div>
-          <div class="tape-detail">${escapeHtml(l.detail || "")}${pnl}</div>
+          <div class="tape-detail">${escapeHtml(l.detail || "")}</div>
+          ${tradeMeta(l)}
         </li>`;
     })
     .join("");

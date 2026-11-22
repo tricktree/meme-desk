@@ -31,6 +31,8 @@ export default defineTool({
     mint: z.string().min(1),
     symbol: z.string().min(1),
     entryUsd: z.number().positive(),
+    /** Market cap USD at entry (from DexScreener / facts), when known. */
+    entryMcapUsd: z.number().positive().optional(),
     judgeVerdict: z.literal("buy"),
     snapDevPct: z.number().optional(),
     snapTop10CombinedPct: z.number().optional(),
@@ -69,6 +71,7 @@ export default defineTool({
       symbol: input.symbol,
       openedAt: new Date().toISOString(),
       entryUsd: input.entryUsd,
+      entryMcapUsd: input.entryMcapUsd,
       sizeUsd,
       exitRule,
       snap: {
@@ -91,6 +94,8 @@ export default defineTool({
       equityUsd: snap.equityUsd,
       openExposureUsd: snap.openExposureUsd,
       pnlUsd: 0,
+      entryUsd: input.entryUsd,
+      entryMcapUsd: input.entryMcapUsd,
     });
     return {
       opened: true,
@@ -99,6 +104,8 @@ export default defineTool({
       symbol: input.symbol,
       sizeUsd,
       exitRule,
+      entryUsd: input.entryUsd,
+      entryMcapUsd: input.entryMcapUsd ?? null,
       tradePnlUsd: 0,
       fund: snap,
     };

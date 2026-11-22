@@ -26,6 +26,8 @@ export default defineTool({
   inputSchema: z.object({
     mint: z.string().min(1),
     markUsd: z.number().positive(),
+    /** Market cap USD at exit / mark, when known. */
+    exitMcapUsd: z.number().positive().optional(),
     reason: z.string().min(1),
   }),
   async execute(input, ctx) {
@@ -50,6 +52,8 @@ export default defineTool({
     if (tradePnlUsd > 0) book.closedWins += 1;
     else if (tradePnlUsd < 0) book.closedLosses += 1;
     else book.closedFlats += 1;
+    const entryUsd = pos.entryUsd;
+    const entryMcapUsd = pos.entryMcapUsd;
     delete book.positions[input.mint];
     await saveBook(ctx.host.kv, book);
     const snap = bankrollSnapshot(book);
@@ -64,6 +68,10 @@ export default defineTool({
       cashUsd: snap.cashUsd,
       equityUsd: snap.equityUsd,
       openExposureUsd: snap.openExposureUsd,
+      entryUsd,
+      exitUsd: input.markUsd,
+      entryMcapUsd,
+      exitMcapUsd: input.exitMcapUsd,
     });
     return {
       closed: true,
@@ -71,6 +79,10 @@ export default defineTool({
       mint: input.mint,
       symbol: pos.symbol,
       sizeUsd: pos.sizeUsd,
+      entryUsd,
+      exitUsd: input.markUsd,
+      entryMcapUsd: entryMcapUsd ?? null,
+      exitMcapUsd: input.exitMcapUsd ?? null,
       tradePnlUsd,
       reason: input.reason,
       fund: snap,

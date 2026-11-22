@@ -92,6 +92,7 @@ function defaultState() {
       symbol: "WAVE",
       openedAt: t(42),
       entryUsd: 0.0042,
+      entryMcapUsd: 380_000,
       sizeUsd: 25,
       exitRule: "trail_20_after_take_80",
       snap: { devPct: 1.1, top10CombinedPct: 16, liqUsd: 72_000 },
@@ -135,6 +136,8 @@ function defaultState() {
       cashUsd: 75,
       equityUsd: 100,
       openExposureUsd: 25,
+      entryUsd: 0.01,
+      entryMcapUsd: 400_000,
     },
     {
       time: t(55),
@@ -147,6 +150,10 @@ function defaultState() {
       cashUsd: 110,
       equityUsd: 110,
       openExposureUsd: 0,
+      entryUsd: 0.01,
+      exitUsd: 0.014,
+      entryMcapUsd: 400_000,
+      exitMcapUsd: 560_000,
     },
     {
       time: t(44),
@@ -165,6 +172,8 @@ function defaultState() {
       cashUsd: 85,
       equityUsd: 110,
       openExposureUsd: 25,
+      entryUsd: 0.0042,
+      entryMcapUsd: 380_000,
     },
     {
       time: t(8),

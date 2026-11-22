@@ -13,6 +13,8 @@ export type PaperPosition = {
   symbol: string;
   openedAt: string;
   entryUsd: number;
+  /** Token market cap USD at paper open, when known. */
+  entryMcapUsd?: number;
   sizeUsd: number;
   exitRule: string;
   snap?: {
@@ -41,6 +43,7 @@ export type DeskBook = {
 export type LogLine = {
   time: string;
   kind: string;
+  /** Contract address (Solana mint). */
   mint?: string;
   symbol?: string;
   detail: string;
@@ -49,6 +52,14 @@ export type LogLine = {
   cashUsd?: number;
   equityUsd?: number;
   openExposureUsd?: number;
+  /** Token USD price at paper open. */
+  entryUsd?: number;
+  /** Token USD price at paper close / mark. */
+  exitUsd?: number;
+  /** Market cap USD at paper open. */
+  entryMcapUsd?: number;
+  /** Market cap USD at paper close. */
+  exitMcapUsd?: number;
 };
 
 export type BankrollSnapshot = {
