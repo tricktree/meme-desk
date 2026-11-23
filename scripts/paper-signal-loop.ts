@@ -1,7 +1,7 @@
 /**
  * End-to-end PAPER signal loop against the $100 fund.
- * Live lead (kill expected) + synthetic open/close.
- * Loads HELIUS from .env via feeds.loadRpcDotEnv.
+ * Early-mcap discovery (the 5-minute timer path) plus one BONK control kill
+ * and an in-memory bankroll check. Loads HELIUS from .env via feeds.loadRpcDotEnv.
  *
  * Run: npx tsx scripts/paper-signal-loop.ts
  */
@@ -16,6 +16,11 @@ import {
 } from "../bot/lib/book.js";
 import { hardKill, judgeGate, memeGates } from "../bot/lib/gates.js";
 import { fetchTokenFacts } from "../bot/lib/feeds.js";
+import {
+  emptyBandMarker,
+  hardKillFromFacts,
+  scanEarlyMcapBand,
+} from "../bot/lib/discovery.js";
 
 function emptyBook(): DeskBook {
   return {
@@ -40,39 +45,27 @@ function dossierFromFacts(facts: Record<string, unknown>) {
   };
 }
 
-async function liveKillPath() {
+/** One saturated-name control. Not the candidate set. */
+async function controlKillPath() {
   const mint = "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263"; // BONK
   const facts = await fetchTokenFacts(mint);
-  const hk = hardKill({
-    mintAuthorityEnabled: facts.mintAuthorityEnabled,
-    freezeAuthorityEnabled: facts.freezeAuthorityEnabled,
-    lpLockedOrBurned: facts.lpLockedOrBurned,
-    top10PctExPool: facts.top10PctExPool,
-    devPct: facts.devPct,
-    insiders: facts.insiders,
-    liquidityUsd: facts.liquidityUsd,
-    ageMin: facts.ageMin,
-    riskScore: facts.riskScore,
-    vol1hUsd: facts.vol1hUsd,
-    buys1h: facts.buys1h,
-    sells1h: facts.sells1h,
-    mcapUsd: facts.mcapUsd,
-    unknownFields: facts.unknownFields,
-  });
+  const hk = hardKillFromFacts(facts);
   const log: LogLine = {
     time: new Date().toISOString(),
     kind: "kill",
     mint,
     symbol: facts.symbol ?? undefined,
-    detail: `kill:${hk.reasons.join(",")}`,
+    detail: `control:${hk.reasons.join(",")}`,
   };
   return {
-    path: "live_kill",
+    role: "control_kill" as const,
     mint,
     symbol: facts.symbol,
+    mcapUsd: facts.mcapUsd,
+    ageMin: facts.ageMin,
+    liquidityUsd: facts.liquidityUsd,
     rpcSource: facts.rpcSource,
     sources: facts.sources,
-    dossierStub: dossierFromFacts(facts.dossier),
     hardKill: hk,
     opened: false,
     log,
@@ -230,6 +223,7 @@ async function syntheticOpenClosePath() {
 
   return {
     path: "synthetic_open_close",
+    countsAsScanBook: false,
     ok,
     hardKill: hk,
     memeGates: mg,
@@ -246,15 +240,43 @@ async function syntheticOpenClosePath() {
 }
 
 async function main() {
-  const live = await liveKillPath();
+  const early = await scanEarlyMcapBand();
+  const control = await controlKillPath();
   const synth = await syntheticOpenClosePath();
+  const earlyBand: Record<string, unknown> = {
+    minMcapUsd: early.minMcapUsd,
+    maxMcapUsd: early.maxMcapUsd,
+    candidateCount: early.candidates.length,
+    candidates: early.candidates.map((row) => ({
+      symbol: row.symbol,
+      mint: row.mint,
+      mcapUsd: row.mcapUsd,
+      ageMin: row.ageMin,
+      liquidityUsd: row.liquidityUsd,
+      source: row.source,
+      hardKill: row.hardKill,
+    })),
+    listsOk: early.listsOk,
+    discovery: early.discovery,
+  };
+  const empty = emptyBandMarker(early.candidates.length);
+  if (empty) earlyBand.empty = empty;
+  const passed = early.candidates.filter((row) => row.hardKill.verdict === "pass").length;
   const out = {
     mode: "paper",
     startingFundUsd: DESK.startingFundUsd,
     ticketUsd: DESK.ticketUsd,
-    live,
+    scanBook: {
+      cashUsd: DESK.startingFundUsd,
+      equityUsd: DESK.startingFundUsd,
+      openCount: 0,
+      realizedPnlUsd: 0,
+      hardKillPasses: passed,
+    },
+    earlyBand,
+    controlKill: control,
     synthetic: synth,
-    ok: live.ok && synth.ok === true,
+    ok: control.ok && synth.ok === true && early.listsOk,
   };
   console.log(JSON.stringify(out, null, 2));
   process.exit(out.ok ? 0 : 1);
