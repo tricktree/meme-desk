@@ -3,8 +3,14 @@
  * Early-mcap discovery (the 5-minute timer path) plus one BONK control kill
  * and an in-memory bankroll check. Loads HELIUS from .env via feeds.loadRpcDotEnv.
  *
+ * When the band list succeeds, writes `.data/paper-desk.json` and pushes the
+ * same PAPER snapshot (no synthetic fills) for the hosted page.
+ *
  * Run: npx tsx scripts/paper-signal-loop.ts
  */
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { DESK } from "../bot/lib/config.js";
 import {
   bankrollSnapshot,
@@ -21,6 +27,21 @@ import {
   hardKillFromFacts,
   scanEarlyMcapBand,
 } from "../bot/lib/discovery.js";
+import { materializeScan, type ScanTapeRow } from "../bot/lib/public-desk.js";
+import { publishPublicDesk, redactSecrets } from "./publish-public-desk.js";
+
+const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+
+function writeDeskState(state: unknown) {
+  const dir = process.env.PAPER_DESK_DATA_DIR
+    ? path.resolve(process.env.PAPER_DESK_DATA_DIR)
+    : path.join(REPO_ROOT, ".data");
+  fs.mkdirSync(dir, { recursive: true });
+  const file = path.join(dir, "paper-desk.json");
+  const tmp = `${file}.tmp`;
+  fs.writeFileSync(tmp, `${JSON.stringify(state, null, 2)}\n`);
+  fs.renameSync(tmp, file);
+}
 
 function emptyBook(): DeskBook {
   return {
@@ -267,6 +288,43 @@ async function main() {
   if (empty) earlyBand.empty = empty;
   const passed = early.candidates.filter((row) => row.hardKill.verdict === "pass").length;
   const opened = early.candidates.filter((row) => row.open?.opened === true).length;
+  const scannedAt = new Date().toISOString();
+  const rows: ScanTapeRow[] = early.candidates.map((row) => ({
+    symbol: row.symbol,
+    mint: row.mint,
+    mcapUsd: row.mcapUsd,
+    detail: row.log?.detail ?? null,
+    kind: row.log?.kind ?? (row.hardKill.verdict === "kill" ? "kill" : null),
+    open: row.open,
+  }));
+  let publicBook: { published: boolean; branch: string; reason?: string; updatedAt?: string } =
+    {
+      published: false,
+      branch: "cursor/paper-live-book-b14c",
+      reason: "lists_unavailable",
+    };
+  if (early.listsOk || early.candidates.length > 0) {
+    const { publicDesk, state } = materializeScan({
+      scannedAt,
+      minMcapUsd: early.minMcapUsd,
+      maxMcapUsd: early.maxMcapUsd,
+      ticketUsd: DESK.ticketUsd,
+      fund: early.scanBook,
+      rows,
+      control: {
+        symbol: control.symbol ?? null,
+        mint: control.mint,
+        mcapUsd: typeof control.mcapUsd === "number" ? control.mcapUsd : null,
+        detail: control.log.detail,
+        kind: "kill",
+        open: null,
+      },
+      emptyMarker: empty ?? undefined,
+    });
+    writeDeskState(state);
+    publicBook = { ...publishPublicDesk(publicDesk), updatedAt: publicDesk.updatedAt };
+    if (publicBook.reason) publicBook.reason = redactSecrets(publicBook.reason);
+  }
   const out = {
     mode: "paper",
     startingFundUsd: DESK.startingFundUsd,
@@ -279,6 +337,7 @@ async function main() {
     earlyBand,
     controlKill: control,
     synthetic: synth,
+    publicBook,
     ok: control.ok && synth.ok === true && early.listsOk,
   };
   console.log(JSON.stringify(out, null, 2));

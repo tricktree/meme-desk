@@ -222,7 +222,7 @@ export function buildDashboardPayload(state = loadState()) {
   const verdicts = log.filter((l) => l.kind === "verdict");
   const opens = log.filter((l) => l.kind === "paper_open");
   const closes = log.filter((l) => l.kind === "paper_close");
-  const recent = [...log].slice(-40).reverse();
+  const recent = [...log].slice(-80).reverse();
 
   return {
     mode: "paper",

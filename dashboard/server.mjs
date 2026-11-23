@@ -4,8 +4,9 @@
  *   node dashboard/server.mjs
  *   PAPER_DESK_PORT=4177 node dashboard/server.mjs
  *
- * Writes are local-only (loopback + same-origin). Hosted Cursor apps use
- * public/desk.json via the static client fallback.
+ * Writes are local-only (loopback + same-origin). The hosted static app
+ * requests /api/desk, then the public scan file, then public/desk.json
+ * when /api/desk is HTML. This process is the local /api/desk.
  */
 import http from "node:http";
 import fs from "node:fs";
