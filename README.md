@@ -35,4 +35,4 @@ npm run dashboard
 # → http://127.0.0.1:4177
 ```
 
-State file: `.data/paper-desk.json` (gitignored). The 5-minute loop writes that file and an agent-side snapshot. The hosted page reads only same-origin `/api/desk` or `desk.json`. Republish from `main` for the URL to serve a new snapshot. See project store doc `docs/paper-desk-dashboard.md`.
+State file: `.data/paper-desk.json` (gitignored). The 5-minute loop writes that file and an agent-side snapshot. Hosted `GET /api/desk` is same-origin: the server reads the snapshot, and the browser does not call GitHub. One republish from `main` turns that route on. Later scans do not need another republish. See project store doc `docs/paper-desk-dashboard.md`.

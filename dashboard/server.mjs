@@ -8,12 +8,14 @@
  * The hosted app does not set that, so POST /api/state, /api/seed, and
  * /api/scan-ping refuse every caller. A loopback socket is not enough
  * when the request is forwarded or the Host is public.
- * GET /api/desk and /desk.json are same-origin. No browser fetch of GitHub.
+ * GET /api/desk is same-origin. When this machine has no real book, the
+ * server reads the scan snapshot. The browser does not.
  */
 import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { fetchUpstreamDesk, isSampleDesk } from "./lib/snapshot.mjs";
 import { allowDeskWrite } from "./lib/write-gate.mjs";
 import {
   buildDashboardPayload,
@@ -78,14 +80,6 @@ function safePublicPath(urlPath) {
   return resolved;
 }
 
-function isSampleDesk(desk) {
-  if (!desk || typeof desk !== "object") return false;
-  return (
-    Boolean(desk.sampleDisclaimer) ||
-    (typeof desk.note === "string" && desk.note.toUpperCase().includes("SAMPLE"))
-  );
-}
-
 /** Shipped same-origin snapshot. Never a sample and never a synthetic fill. */
 function readShippedDesk() {
   try {
@@ -136,12 +130,19 @@ async function handleApi(req, res, url) {
   if (url.pathname === "/api/desk" && req.method === "GET") {
     const state = loadState();
     const fromState = buildDashboardPayload(state);
-    if (isSampleDesk(fromState) || isSampleDesk(state)) {
-      const shipped = readShippedDesk();
-      if (shipped) {
-        sendJson(res, 200, shipped);
-        return true;
-      }
+    if (!(isSampleDesk(fromState) || isSampleDesk(state))) {
+      sendJson(res, 200, fromState);
+      return true;
+    }
+    const upstream = await fetchUpstreamDesk();
+    if (upstream) {
+      sendJson(res, 200, upstream);
+      return true;
+    }
+    const shipped = readShippedDesk();
+    if (shipped) {
+      sendJson(res, 200, shipped);
+      return true;
     }
     sendJson(res, 200, fromState);
     return true;
