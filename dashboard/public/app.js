@@ -127,6 +127,7 @@ function tradeMeta(l) {
       }`,
     );
   }
+  if (typeof l.mcapUsd === "number") bits.push(`mcap ${mcap(l.mcapUsd)}`);
   if (typeof l.pnlUsd === "number") bits.push(`pnl ${money(l.pnlUsd)}`);
   else if (typeof l.sizeUsd === "number" && l.kind === "paper_open") {
     bits.push(`size ${money(l.sizeUsd)}`);
@@ -141,7 +142,7 @@ function renderTape(rows) {
     return;
   }
   root.innerHTML = rows
-    .slice(0, 28)
+    .slice(0, 80)
     .map((l) => {
       const kind = escapeHtml(l.kind || "note");
       return `
@@ -199,13 +200,32 @@ function applyDesk(desk) {
 
   const banner = $("#sampleBanner");
   if (banner) {
-    const show =
-      desk.source === "static" ||
-      Boolean(desk.sampleDisclaimer) ||
-      (desk.note && String(desk.note).toUpperCase().includes("SAMPLE"));
+    const show = isSampleDesk(desk);
     banner.hidden = !show;
-    if (desk.sampleDisclaimer) banner.textContent = desk.sampleDisclaimer;
+    if (show) {
+      banner.textContent =
+        desk.sampleDisclaimer ||
+        desk.note ||
+        "Sample snapshot — not the live PAPER scan.";
+    }
   }
+}
+
+function isSampleDesk(desk) {
+  return (
+    Boolean(desk.sampleDisclaimer) ||
+    (desk.note && String(desk.note).toUpperCase().includes("SAMPLE"))
+  );
+}
+
+const STALE_MS = 15 * 60 * 1000;
+
+function feedState(desk) {
+  if (isSampleDesk(desk)) return { state: "ok", label: "sample" };
+  const t = Date.parse(desk.updatedAt || desk.lastScanAt || "");
+  const age = Number.isNaN(t) ? Infinity : Date.now() - t;
+  if (age > STALE_MS) return { state: "stale", label: "stale" };
+  return { state: "ok", label: "live" };
 }
 
 function setLive(state, detail) {
@@ -238,29 +258,55 @@ async function readJsonResponse(res) {
   return JSON.parse(trimmed);
 }
 
-/** Prefer local Node API; fall back to committed static snapshot for hosting. */
+function isDeskPayload(desk) {
+  if (!desk || desk.mode !== "paper" || desk.walletControls) return false;
+  if (!desk.fund || typeof desk.fund.cashUsd !== "number") return false;
+  if (!Array.isArray(desk.recent)) return false;
+  const raw = JSON.stringify(desk);
+  if (raw.includes("script_synthetic") || raw.includes("eval_bankroll_math")) return false;
+  return true;
+}
+
+async function fetchJsonUrl(url) {
+  const res = await fetch(url, { cache: "no-store" });
+  const desk = await readJsonResponse(res);
+  if (!isDeskPayload(desk)) throw new Error("not_desk");
+  return desk;
+}
+
+/** Same origin only: local /api/desk, then the shipped /desk.json snapshot. */
 async function fetchDesk() {
   try {
-    const res = await fetch("/api/desk", { cache: "no-store" });
-    const desk = await readJsonResponse(res);
-    return { desk, source: "api" };
+    const desk = await fetchJsonUrl("/api/desk");
+    if (!isSampleDesk(desk)) return { desk, source: "api" };
   } catch {
-    const res = await fetch("/desk.json", { cache: "no-store" });
-    const desk = await readJsonResponse(res);
-    return { desk, source: "static" };
+    /* Hosted static /api/desk is HTML. */
   }
+  return { desk: await fetchJsonUrl("/desk.json"), source: "static" };
+}
+
+let pollTimer = null;
+let pollMs = 0;
+
+function armPoll(ms) {
+  if (pollMs === ms && pollTimer) return;
+  pollMs = ms;
+  if (pollTimer) clearInterval(pollTimer);
+  pollTimer = setInterval(refresh, ms);
 }
 
 async function refresh() {
   try {
     const { desk, source } = await fetchDesk();
     applyDesk(desk);
-    setLive("ok", source === "static" ? "sample" : "live");
+    const feed = feedState(desk);
+    setLive(feed.state, feed.label);
+    armPoll(POLL_MS);
   } catch (err) {
     setLive("err", "offline");
+    armPoll(POLL_MS);
     console.error(err);
   }
 }
 
 refresh();
-setInterval(refresh, POLL_MS);

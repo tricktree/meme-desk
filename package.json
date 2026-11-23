@@ -6,7 +6,7 @@
   "scripts": {
     "check": "tsc --noEmit",
     "dev": "agent-sdk dev",
-    "dashboard": "node dashboard/server.mjs"
+    "dashboard": "PAPER_DESK_WRITES=1 node dashboard/server.mjs"
   },
   "dependencies": {
     "@grok/agent-sdk": "^0.7.2",
