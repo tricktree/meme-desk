@@ -1,8 +1,9 @@
 /**
  * After a hard-kill pass, run the existing meme gates and closed judge,
  * then book the flat paper ticket only when the judge returns buy.
- * The fact feed has no holder-growth series and no mcap/ATH, so the scan
- * does not claim organic=yes or late=no. A later gate fail takes no ticket.
+ * Organic, late, and exit risk are filled from measured flow, the 1h share
+ * of the 24h move, and ticket share of the pool. A missing measurement
+ * does not become a buy. Rug hard kills are unchanged.
  */
 
 import { DESK } from "./config.js";
@@ -14,7 +15,13 @@ import {
   type BankrollSnapshot,
   type DeskBook,
 } from "./book.js";
-import { judgeGate, memeGates, type JudgeAnswers } from "./gates.js";
+import {
+  HARD_KILL_MIN_SELL_BUY_RATIO,
+  HARD_KILL_MIN_VOL_1H_USD,
+  judgeGate,
+  memeGates,
+  type JudgeAnswers,
+} from "./gates.js";
 import type { TokenFacts } from "./feeds.js";
 
 export type MemeStep = { verdict: "kill" | "pass"; reasons: string[] };
@@ -73,17 +80,59 @@ export function exitRiskFromLiquidity(liquidityUsd: number | null): number {
 }
 
 /**
- * Closed-judge answers the scan is allowed to submit.
- * Missing organic and late evidence stays a non-buy. Thresholds are untouched.
+ * Fraction of the positive 24h price gain that is already behind the last hour.
+ * Null when the pair did not print both changes, or when there is no 24h gain.
  */
-export function scanJudgeAnswers(liquidityUsd: number | null): JudgeAnswers {
+export function moveAlreadyDoneShare(h1Pct: number | null, h24Pct: number | null): number | null {
+  if (h1Pct == null || h24Pct == null || !(h24Pct > 0)) return null;
+  const hourMultiple = 1 + h1Pct / 100;
+  const dayMultiple = 1 + h24Pct / 100;
+  if (!(hourMultiple > 0) || !(dayMultiple > 0)) return null;
+  const hourGain = 1 - 1 / hourMultiple;
+  const dayGain = 1 - 1 / dayMultiple;
+  if (!(dayGain > 0)) return null;
+  return 1 - hourGain / dayGain;
+}
+
+function organicFromFlow(facts: TokenFacts): boolean {
+  const buys = facts.buys1h;
+  const sells = facts.sells1h;
+  const vol = facts.vol1hUsd;
+  if (buys == null || sells == null || vol == null) return false;
+  if (vol < HARD_KILL_MIN_VOL_1H_USD) return false;
+  const many = DESK.gates.signalMinWallets;
+  if (buys < many || sells < many) return false;
+  return sells / Math.max(buys, 1) >= HARD_KILL_MIN_SELL_BUY_RATIO;
+}
+
+/**
+ * True when most of the measured 24h gain is already behind the last hour,
+ * using the existing lateZone ratio. Missing prints stay late so the judge
+ * does not treat an unknown move as early.
+ */
+export function moveIsLate(h1Pct: number | null, h24Pct: number | null): boolean {
+  if (h1Pct == null || h24Pct == null) return true;
+  if (!(h24Pct > 0)) return false;
+  const done = moveAlreadyDoneShare(h1Pct, h24Pct);
+  if (done == null) return true;
+  return done >= DESK.gates.lateZone;
+}
+
+/**
+ * Closed-judge menu from measured facts. action is buy so judgeGate can
+ * name organic, late, or exit risk instead of stopping on a hardcoded pass.
+ * Probabilities are 1 only when that measurement cleared, else 0.
+ */
+export function scanJudgeAnswers(facts: TokenFacts, liquidityUsd: number | null): JudgeAnswers {
+  const organic = organicFromFlow(facts);
+  const late = moveIsLate(facts.priceChangeH1, facts.priceChangeH24);
   return {
-    action: "pass",
-    actionP: 0,
-    organic: "no",
-    organicP: 0,
-    late: "yes",
-    exitRisk: exitRiskFromLiquidity(liquidityUsd),
+    action: "buy",
+    actionP: 1,
+    organic: organic ? "yes" : "no",
+    organicP: organic ? 1 : 0,
+    late: late ? "yes" : "no",
+    exitRisk: exitRiskFromLiquidity(liquidityUsd ?? facts.liquidityUsd),
   };
 }
 
@@ -189,7 +238,7 @@ export function followHardKillPass(
     };
   }
 
-  const answers = scanJudgeAnswers(row.liquidityUsd ?? row.facts.liquidityUsd);
+  const answers = scanJudgeAnswers(row.facts, row.liquidityUsd ?? row.facts.liquidityUsd);
   const judged = judgeGate(answers);
   const judge: JudgeStep = { ...judged, answers };
   if (judge.verdict !== "buy") {

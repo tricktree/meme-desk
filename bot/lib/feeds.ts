@@ -28,6 +28,10 @@ export type TokenFacts = {
   vol24Usd: number | null;
   buys1h: number | null;
   sells1h: number | null;
+  /** DexScreener percent change over the last hour, when the pair prints it. */
+  priceChangeH1: number | null;
+  /** DexScreener percent change over 24h, when the pair prints it. */
+  priceChangeH24: number | null;
   ageMin: number | null;
   pairAddress: string | null;
   quoteSymbol: string | null;
@@ -165,6 +169,15 @@ async function getJson(
   }
 }
 
+function finiteChange(value: unknown): number | null {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (typeof value === "string" && value.trim()) {
+    const n = Number(value);
+    if (Number.isFinite(n)) return n;
+  }
+  return null;
+}
+
 function isStableOrSol(sym: string | undefined | null): boolean {
   if (!sym) return false;
   const s = sym.toUpperCase();
@@ -180,6 +193,7 @@ type DsPair = {
   liquidity?: { usd?: number };
   volume?: { h1?: number; h24?: number };
   txns?: { h1?: { buys?: number; sells?: number } };
+  priceChange?: { h1?: number; h24?: number };
   marketCap?: number;
   fdv?: number;
   pairCreatedAt?: number;
@@ -406,6 +420,8 @@ export async function fetchTokenFacts(mint: string): Promise<TokenFacts> {
     vol24Usd: pair?.volume?.h24 ?? null,
     buys1h: pair?.txns?.h1?.buys ?? null,
     sells1h: pair?.txns?.h1?.sells ?? null,
+    priceChangeH1: finiteChange(pair?.priceChange?.h1),
+    priceChangeH24: finiteChange(pair?.priceChange?.h24),
     ageMin,
     pairAddress: pair?.pairAddress ?? null,
     quoteSymbol: quoteSym,
@@ -448,6 +464,8 @@ export async function fetchTokenFacts(mint: string): Promise<TokenFacts> {
     vol24Usd: facts.vol24Usd,
     buys1h: facts.buys1h,
     sells1h: facts.sells1h,
+    priceChangeH1: facts.priceChangeH1,
+    priceChangeH24: facts.priceChangeH24,
     ageMin: facts.ageMin,
     pairAddress: facts.pairAddress,
     quoteSymbol: facts.quoteSymbol,

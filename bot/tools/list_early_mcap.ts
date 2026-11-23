@@ -15,9 +15,10 @@ export default defineTool({
     meme gates and the closed judge. paper_open is represented on the row only
     when the judge returns buy: flat $25 ticket, cash debited from the $100 fund,
     entry price and mcap from the facts, exit attached. A meme-gate or judge fail
-    is a logged kill and takes no ticket. The scan does not claim organic=yes or
-    late=no when those facts are missing. When the filtered list is empty, empty
-    is no_early_mcap_candidate. Does not sign, does not take wallet keys, and
+    is a logged kill and takes no ticket. Organic, late, and exit risk are filled
+    from measured 1h flow, the 1h share of the 24h move, and ticket share of the
+    pool. Missing flow or a missing move does not buy. When the filtered list
+    is empty, empty is no_early_mcap_candidate. Does not sign, does not take wallet keys, and
     does not change gate numbers. HELIUS stays read-only getAccountInfo inside
     the fact fetch.
   `,
