@@ -11,6 +11,13 @@ import { DESK } from "./config.js";
 import { isSolanaMint } from "./book.js";
 import { hardKill, type HardKillFacts } from "./gates.js";
 import { fetchTokenFacts, type FeedSourceStatus, type TokenFacts } from "./feeds.js";
+import {
+  followHardKillPass,
+  freshScanBook,
+  scanBookSnapshot,
+  type FunnelFollowThrough,
+  type FunnelLog,
+} from "./scan-funnel.js";
 
 const GT_TRENDING =
   "https://api.geckoterminal.com/api/v2/networks/solana/trending_pools?page=1&include=base_token,quote_token";
@@ -72,6 +79,14 @@ export type EarlyBandCandidate = {
   liquidityUsd: number | null;
   source: PoolListSource;
   hardKill: { verdict: "kill" | "pass"; reasons: string[] };
+  /** Null when hard kill already stopped the mint. */
+  memeGates: FunnelFollowThrough["memeGates"];
+  /** Null when hard kill or meme gates already stopped the mint. */
+  judge: FunnelFollowThrough["judge"];
+  /** Set only when the judge returns buy. */
+  open: FunnelFollowThrough["open"];
+  /** Kill when the mint does not open. paper_open only after a judge buy. */
+  log: FunnelLog | null;
 };
 
 export type DiscoveryMeta = {
@@ -94,6 +109,8 @@ export type EarlyBandScan = {
   /** Set only when the filtered band is empty. */
   empty?: "no_early_mcap_candidate";
   listsOk: boolean;
+  /** Paper book after any judge-buy tickets. Cash stays at the fund until one opens. */
+  scanBook: ReturnType<typeof scanBookSnapshot>;
   discovery: DiscoveryMeta;
 };
 
@@ -521,6 +538,7 @@ export async function scanEarlyMcapBand(now = Date.now()): Promise<EarlyBandScan
     }
   });
 
+  const book = freshScanBook();
   const candidates: EarlyBandCandidate[] = [];
   for (const item of measured) {
     const { row } = item;
@@ -530,6 +548,7 @@ export async function scanEarlyMcapBand(now = Date.now()): Promise<EarlyBandScan
         droppedOutsideBand += 1;
         continue;
       }
+      const hardKillResult = failClosedKill(row);
       candidates.push({
         symbol: row.symbol,
         mint: row.mint,
@@ -537,7 +556,11 @@ export async function scanEarlyMcapBand(now = Date.now()): Promise<EarlyBandScan
         ageMin: row.ageMin,
         liquidityUsd: row.liquidityUsd,
         source: row.source,
-        hardKill: failClosedKill(row),
+        hardKill: hardKillResult,
+        memeGates: null,
+        judge: null,
+        open: null,
+        log: { kind: "kill", detail: `hardKill:${hardKillResult.reasons.join(",")}` },
       });
       continue;
     }
@@ -550,14 +573,29 @@ export async function scanEarlyMcapBand(now = Date.now()): Promise<EarlyBandScan
     }
     const ageMin = facts.ageMin ?? row.ageMin;
     const liquidityUsd = facts.liquidityUsd ?? row.liquidityUsd;
+    const hardKillResult = hardKillFromFacts(facts, { mcapUsd, ageMin, liquidityUsd });
+    const symbol = facts.symbol ?? row.symbol;
+    const funnel = followHardKillPass(book, {
+      mint: row.mint,
+      symbol,
+      mcapUsd,
+      liquidityUsd,
+      facts,
+      hardKillPass: hardKillResult.verdict === "pass",
+    });
     candidates.push({
-      symbol: facts.symbol ?? row.symbol,
+      symbol,
       mint: row.mint,
       mcapUsd,
       ageMin,
       liquidityUsd,
       source: row.source,
-      hardKill: hardKillFromFacts(facts, { mcapUsd, ageMin, liquidityUsd }),
+      hardKill: hardKillResult,
+      ...funnel,
+      log:
+        hardKillResult.verdict === "kill"
+          ? { kind: "kill", detail: `hardKill:${hardKillResult.reasons.join(",")}` }
+          : funnel.log,
     });
   }
 
@@ -572,6 +610,7 @@ export async function scanEarlyMcapBand(now = Date.now()): Promise<EarlyBandScan
     maxMcapUsd: DESK.entry.maxMcapUsd,
     candidates,
     listsOk,
+    scanBook: scanBookSnapshot(book),
     discovery: {
       trendingRowCount: trendingRows.length,
       newPoolPagesWalked: walked.pagesWalked,
