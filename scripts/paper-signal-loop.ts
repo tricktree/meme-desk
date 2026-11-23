@@ -4,8 +4,8 @@
  * and an in-memory bankroll check. Loads HELIUS from .env via feeds.loadRpcDotEnv.
  *
  * When the band list succeeds, writes `.data/paper-desk.json` and pushes an
- * agent-side PAPER snapshot (no synthetic fills). The hosted page does not
- * fetch that branch. It serves same-origin desk.json after a republish.
+ * agent-side PAPER snapshot (no synthetic fills). The hosted server reads
+ * that snapshot for same-origin GET /api/desk. The browser does not.
  *
  * Run: npx tsx scripts/paper-signal-loop.ts
  */

@@ -4,11 +4,16 @@
   "type": "module",
   "description": "PAPER-only $100 fund desk dashboard (local book state)",
   "scripts": {
-    "start": "node server.mjs",
-    "dev": "node server.mjs",
-    "build": "node scripts/write-desk-json.mjs"
+    "start": "next start --hostname 0.0.0.0 --port ${PORT:-3000}",
+    "dev": "next dev --hostname 127.0.0.1 --port 4177",
+    "build": "next build"
   },
   "engines": {
     "node": ">=22"
+  },
+  "dependencies": {
+    "next": "^15.5.29",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   }
 }

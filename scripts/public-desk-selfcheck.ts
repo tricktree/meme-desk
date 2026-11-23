@@ -136,9 +136,18 @@ assert(idle.publicDesk.openPositions.length === 0, "no invented open");
 assert(idle.publicDesk.fund.cashUsd === 100 && idle.publicDesk.fund.equityUsd === 100, "flat fund");
 
 const appJs = fs.readFileSync(path.join(root, "dashboard/public/app.js"), "utf8");
+const snapshotJs = fs.readFileSync(
+  path.join(root, "dashboard/lib/snapshot.mjs"),
+  "utf8",
+);
 assert(!appJs.includes("raw.githubusercontent.com"), "browser must not fetch GitHub");
 assert(!appJs.includes("LIVE_BOOK_URL"), "no third-party desk url");
 assert(appJs.includes('fetchJsonUrl("/desk.json")'), "same-origin desk.json");
 assert(appJs.includes('fetchJsonUrl("/api/desk")'), "same-origin api");
+assert(
+  snapshotJs.includes("cursor/paper-live-book-b14c/dashboard/public/desk.json"),
+  "server reads the scan snapshot",
+);
+assert(!snapshotJs.includes("req.url") && !snapshotJs.includes("searchParams"), "snapshot url is fixed");
 
 console.log(JSON.stringify({ ok: true, tape: publicDesk.recent.length }));
