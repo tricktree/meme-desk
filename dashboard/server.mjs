@@ -4,14 +4,17 @@
  *   node dashboard/server.mjs
  *   PAPER_DESK_PORT=4177 node dashboard/server.mjs
  *
- * Writes are local-only (loopback + same-origin). The hosted static app
- * requests /api/desk, then the public scan file, then public/desk.json
- * when /api/desk is HTML. This process is the local /api/desk.
+ * Writes stay off unless PAPER_DESK_WRITES=1 (local npm run dashboard).
+ * The hosted app does not set that, so POST /api/state, /api/seed, and
+ * /api/scan-ping refuse every caller. A loopback socket is not enough
+ * when the request is forwarded or the Host is public.
+ * GET /api/desk and /desk.json are same-origin. No browser fetch of GitHub.
  */
 import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { allowDeskWrite } from "./lib/write-gate.mjs";
 import {
   buildDashboardPayload,
   loadState,
@@ -24,7 +27,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC = path.join(__dirname, "public");
 const PORT = Number(process.env.PAPER_DESK_PORT || process.env.PORT || 4177);
 const HOST = process.env.PAPER_DESK_HOST || "127.0.0.1";
-const WRITES_ENABLED = process.env.PAPER_DESK_WRITES !== "0";
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -76,40 +78,32 @@ function safePublicPath(urlPath) {
   return resolved;
 }
 
-function isLoopback(req) {
-  const ra = req.socket?.remoteAddress || "";
+function isSampleDesk(desk) {
+  if (!desk || typeof desk !== "object") return false;
   return (
-    ra === "127.0.0.1" ||
-    ra === "::1" ||
-    ra === "::ffff:127.0.0.1"
+    Boolean(desk.sampleDisclaimer) ||
+    (typeof desk.note === "string" && desk.note.toUpperCase().includes("SAMPLE"))
   );
 }
 
-/** Same-origin / local write gate (CSRF + no anonymous remote writes). */
-function allowWrite(req) {
-  if (!WRITES_ENABLED) return false;
-  if (!isLoopback(req)) return false;
-  const host = req.headers.host || "";
-  const origin = req.headers.origin;
-  if (origin) {
-    try {
-      const o = new URL(origin);
-      if (o.host !== host) return false;
-    } catch {
-      return false;
+/** Shipped same-origin snapshot. Never a sample and never a synthetic fill. */
+function readShippedDesk() {
+  try {
+    const desk = JSON.parse(
+      fs.readFileSync(path.join(PUBLIC, "desk.json"), "utf8"),
+    );
+    if (!desk || desk.mode !== "paper" || desk.walletControls) return null;
+    if (isSampleDesk(desk)) return null;
+    if (!desk.fund || typeof desk.fund.cashUsd !== "number") return null;
+    if (!Array.isArray(desk.recent)) return null;
+    const raw = JSON.stringify(desk);
+    if (raw.includes("script_synthetic") || raw.includes("eval_bankroll_math")) {
+      return null;
     }
+    return desk;
+  } catch {
+    return null;
   }
-  const referer = req.headers.referer;
-  if (!origin && referer) {
-    try {
-      const r = new URL(referer);
-      if (r.host !== host) return false;
-    } catch {
-      return false;
-    }
-  }
-  // curl/local tools: loopback with neither Origin nor Referer is OK.
-  return true;
 }
 
 function refreshStaticSnapshot() {
@@ -123,7 +117,7 @@ function refreshStaticSnapshot() {
 async function handleApi(req, res, url) {
   if (req.method === "OPTIONS") {
     res.writeHead(204, {
-      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
     });
     res.end();
@@ -140,7 +134,16 @@ async function handleApi(req, res, url) {
   }
 
   if (url.pathname === "/api/desk" && req.method === "GET") {
-    sendJson(res, 200, buildDashboardPayload(loadState()));
+    const state = loadState();
+    const fromState = buildDashboardPayload(state);
+    if (isSampleDesk(fromState) || isSampleDesk(state)) {
+      const shipped = readShippedDesk();
+      if (shipped) {
+        sendJson(res, 200, shipped);
+        return true;
+      }
+    }
+    sendJson(res, 200, fromState);
     return true;
   }
 
@@ -153,7 +156,7 @@ async function handleApi(req, res, url) {
       sendJson(res, 405, { ok: false, error: "method_not_allowed" });
       return true;
     }
-    if (!allowWrite(req)) {
+    if (!allowDeskWrite(req)) {
       sendJson(res, 403, { ok: false, error: "writes_forbidden" });
       return true;
     }
@@ -250,7 +253,6 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, HOST, () => {
   loadState();
-  refreshStaticSnapshot();
   console.log(
     JSON.stringify({
       ok: true,

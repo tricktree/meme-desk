@@ -35,4 +35,4 @@ npm run dashboard
 # → http://127.0.0.1:4177
 ```
 
-State file: `.data/paper-desk.json` (gitignored). The 5-minute loop writes that file and pushes the same PAPER snapshot to `cursor/paper-live-book-b14c` (`dashboard/public/desk.json`) so the hosted page can read it. Republish the dashboard after client changes; the scan file updates without another republish. See project store doc `docs/paper-desk-dashboard.md`.
+State file: `.data/paper-desk.json` (gitignored). The 5-minute loop writes that file and an agent-side snapshot. The hosted page reads only same-origin `/api/desk` or `desk.json`. Republish from `main` for the URL to serve a new snapshot. See project store doc `docs/paper-desk-dashboard.md`.

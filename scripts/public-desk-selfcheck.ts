@@ -6,12 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import type { BankrollSnapshot } from "../bot/lib/book.js";
-import {
-  LIVE_BOOK_BRANCH,
-  LIVE_BOOK_FILE,
-  materializeScan,
-  type ScanTapeRow,
-} from "../bot/lib/public-desk.js";
+import { materializeScan, type ScanTapeRow } from "../bot/lib/public-desk.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -141,7 +136,9 @@ assert(idle.publicDesk.openPositions.length === 0, "no invented open");
 assert(idle.publicDesk.fund.cashUsd === 100 && idle.publicDesk.fund.equityUsd === 100, "flat fund");
 
 const appJs = fs.readFileSync(path.join(root, "dashboard/public/app.js"), "utf8");
-const needle = `${LIVE_BOOK_BRANCH}/${LIVE_BOOK_FILE}`;
-assert(appJs.includes(needle), `app.js must fetch ${needle}`);
+assert(!appJs.includes("raw.githubusercontent.com"), "browser must not fetch GitHub");
+assert(!appJs.includes("LIVE_BOOK_URL"), "no third-party desk url");
+assert(appJs.includes('fetchJsonUrl("/desk.json")'), "same-origin desk.json");
+assert(appJs.includes('fetchJsonUrl("/api/desk")'), "same-origin api");
 
 console.log(JSON.stringify({ ok: true, tape: publicDesk.recent.length }));

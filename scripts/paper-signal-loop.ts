@@ -3,8 +3,9 @@
  * Early-mcap discovery (the 5-minute timer path) plus one BONK control kill
  * and an in-memory bankroll check. Loads HELIUS from .env via feeds.loadRpcDotEnv.
  *
- * When the band list succeeds, writes `.data/paper-desk.json` and pushes the
- * same PAPER snapshot (no synthetic fills) for the hosted page.
+ * When the band list succeeds, writes `.data/paper-desk.json` and pushes an
+ * agent-side PAPER snapshot (no synthetic fills). The hosted page does not
+ * fetch that branch. It serves same-origin desk.json after a republish.
  *
  * Run: npx tsx scripts/paper-signal-loop.ts
  */

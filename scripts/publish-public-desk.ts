@@ -1,5 +1,6 @@
 /**
- * Push the PAPER scan snapshot to the public branch the hosted page reads.
+ * Agent-side PAPER snapshot push. The hosted page does not fetch this branch.
+ * Visitors read same-origin /api/desk or desk.json after a republish from main.
  * Git credentials stay in the environment. Nothing here is a wallet key.
  * PAPER_DESK_PUBLISH=0 skips the push (the local .data file is still written).
  */

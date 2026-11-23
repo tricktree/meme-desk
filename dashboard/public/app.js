@@ -258,14 +258,6 @@ async function readJsonResponse(res) {
   return JSON.parse(trimmed);
 }
 
-/**
- * Public PAPER file the 5-minute scan pushes.
- * Same path as LIVE_BOOK_BRANCH / LIVE_BOOK_FILE in bot/lib/public-desk.ts.
- * Hosted static pages get HTML from /api/desk, then this file, then /desk.json.
- */
-const LIVE_BOOK_URL =
-  "https://raw.githubusercontent.com/tricktree/meme-desk/cursor/paper-live-book-b14c/dashboard/public/desk.json";
-
 function isDeskPayload(desk) {
   if (!desk || desk.mode !== "paper" || desk.walletControls) return false;
   if (!desk.fund || typeof desk.fund.cashUsd !== "number") return false;
@@ -282,17 +274,13 @@ async function fetchJsonUrl(url) {
   return desk;
 }
 
-/** Local Node API, then the public scan file, then the baked snapshot. */
+/** Same origin only: local /api/desk, then the shipped /desk.json snapshot. */
 async function fetchDesk() {
   try {
-    return { desk: await fetchJsonUrl("/api/desk"), source: "api" };
+    const desk = await fetchJsonUrl("/api/desk");
+    if (!isSampleDesk(desk)) return { desk, source: "api" };
   } catch {
     /* Hosted static /api/desk is HTML. */
-  }
-  try {
-    return { desk: await fetchJsonUrl(LIVE_BOOK_URL), source: "live" };
-  } catch {
-    /* Branch not pushed yet, or the browser blocked the read. */
   }
   return { desk: await fetchJsonUrl("/desk.json"), source: "static" };
 }
@@ -313,7 +301,7 @@ async function refresh() {
     applyDesk(desk);
     const feed = feedState(desk);
     setLive(feed.state, feed.label);
-    armPoll(source === "api" ? POLL_MS : 30_000);
+    armPoll(POLL_MS);
   } catch (err) {
     setLive("err", "offline");
     armPoll(POLL_MS);
