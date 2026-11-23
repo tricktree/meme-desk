@@ -255,6 +255,10 @@ async function main() {
       liquidityUsd: row.liquidityUsd,
       source: row.source,
       hardKill: row.hardKill,
+      memeGates: row.memeGates,
+      judge: row.judge,
+      open: row.open,
+      log: row.log,
     })),
     listsOk: early.listsOk,
     discovery: early.discovery,
@@ -262,16 +266,15 @@ async function main() {
   const empty = emptyBandMarker(early.candidates.length);
   if (empty) earlyBand.empty = empty;
   const passed = early.candidates.filter((row) => row.hardKill.verdict === "pass").length;
+  const opened = early.candidates.filter((row) => row.open?.opened === true).length;
   const out = {
     mode: "paper",
     startingFundUsd: DESK.startingFundUsd,
     ticketUsd: DESK.ticketUsd,
     scanBook: {
-      cashUsd: DESK.startingFundUsd,
-      equityUsd: DESK.startingFundUsd,
-      openCount: 0,
-      realizedPnlUsd: 0,
+      ...early.scanBook,
       hardKillPasses: passed,
+      openedCount: opened,
     },
     earlyBand,
     controlKill: control,

@@ -11,11 +11,15 @@ export default defineTool({
     page cap. DexScreener profiles and boosts are a second mint list with no mcap;
     each of those mints goes through the existing fact fetch. Keeps mints inside
     config minMcapUsd–maxMcapUsd and drops anything outside that band before hard
-    kill. Identity is the mint, not the ticker. Returns symbol, mint, mcap, age,
-    liquidity, and hardKill reasons for each in-band mint. When the filtered list
-    is empty, empty is no_early_mcap_candidate. Does not open a paper position,
-    does not take wallet keys, and does not change gate numbers. HELIUS stays
-    read-only getAccountInfo inside the fact fetch.
+    kill. Identity is the mint, not the ticker. A hardKill pass continues through
+    meme gates and the closed judge. paper_open is represented on the row only
+    when the judge returns buy: flat $25 ticket, cash debited from the $100 fund,
+    entry price and mcap from the facts, exit attached. A meme-gate or judge fail
+    is a logged kill and takes no ticket. The scan does not claim organic=yes or
+    late=no when those facts are missing. When the filtered list is empty, empty
+    is no_early_mcap_candidate. Does not sign, does not take wallet keys, and
+    does not change gate numbers. HELIUS stays read-only getAccountInfo inside
+    the fact fetch.
   `,
   effect: "read",
   inputSchema: z.object({}),
