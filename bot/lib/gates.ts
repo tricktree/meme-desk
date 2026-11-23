@@ -1,5 +1,10 @@
 import { DESK } from "./config.js";
 
+/** Same 1h volume floor hardKill already applies when the field is present. */
+export const HARD_KILL_MIN_VOL_1H_USD = 15_000;
+/** Same sell/buy floor hardKill already applies when both prints are present. */
+export const HARD_KILL_MIN_SELL_BUY_RATIO = 0.15;
+
 export type HardKillFacts = {
   mintAuthorityEnabled?: boolean | null;
   freezeAuthorityEnabled?: boolean | null;
@@ -86,10 +91,10 @@ export function hardKill(facts: HardKillFacts): { verdict: "kill" | "pass"; reas
   if ((facts.ageMin as number) < e.minAgeMin) reasons.push("too_young");
   if ((facts.ageMin as number) > e.maxAgeHours * 60) reasons.push("too_old");
   if (facts.riskScore != null && facts.riskScore > e.maxRiskScore) reasons.push("risk_score");
-  if (facts.vol1hUsd != null && facts.vol1hUsd < 15_000) reasons.push("volume_1h");
+  if (facts.vol1hUsd != null && facts.vol1hUsd < HARD_KILL_MIN_VOL_1H_USD) reasons.push("volume_1h");
   if (facts.buys1h != null && facts.sells1h != null) {
     const ratio = facts.sells1h / Math.max(facts.buys1h, 1);
-    if (ratio < 0.15) reasons.push("no_sells");
+    if (ratio < HARD_KILL_MIN_SELL_BUY_RATIO) reasons.push("no_sells");
   }
   if (
     facts.mcapUsd != null &&
