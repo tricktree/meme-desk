@@ -27,218 +27,210 @@
   },
   "openPositions": [],
   "entriesToday": 0,
-  "lastScanAt": "2026-11-27T23:26:00.856Z",
-  "updatedAt": "2026-11-27T23:26:00.856Z",
+  "lastScanAt": "2026-11-27T23:30:56.954Z",
+  "updatedAt": "2026-11-27T23:30:56.954Z",
   "heliusOptional": true,
   "marksApplied": false,
   "recent": [
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "scan",
-      "detail": "early band $20000–$1000000 · in-band 36 · opened 0"
+      "detail": "early band $20000–$1000000 · in-band 35 · opened 0"
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:top10,insiders,too_old,volume_1h,mcap_band · control",
       "mint": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
       "symbol": "Bonk",
-      "mcapUsd": 190801170
+      "mcapUsd": 190873720
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:insiders,too_old",
       "mint": "9TKbd3VFaMSXsEAicD9JVQWpWwAoLi4fSgWmZL2cpump",
       "symbol": "Snowball",
-      "mcapUsd": 518019
+      "mcapUsd": 513446
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:insiders,too_old",
       "mint": "38M2z4UCfZEkUHFzD48vhKQhFhNyRGto8pZbLjNipump",
       "symbol": "JIMMY",
-      "mcapUsd": 647954
+      "mcapUsd": 662556
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:insiders",
       "mint": "63jDWWFwp25ChLvsofbVRMprRbhiXuWoWVxrwFfypump",
       "symbol": "DEXDATA",
-      "mcapUsd": 273453
+      "mcapUsd": 296258
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:top10,insiders,liquidity,volume_1h",
       "mint": "4tqzkSWA9tiWYhzYpSt81We3cVNkrEbkD1tzjFDZpump",
       "symbol": "VAULT",
-      "mcapUsd": 24846
+      "mcapUsd": 24562
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:top10,insiders,liquidity,volume_1h",
       "mint": "7XSYaJygcuNe6Q3kPvwsJpg4ZrFL1AEUFb8kCuzppump",
       "symbol": "Kibo",
-      "mcapUsd": 80977
+      "mcapUsd": 72522
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
-      "detail": "kill:insiders",
+      "detail": "kill:insiders,liquidity",
       "mint": "HAP9FcXubD88SjRHMY1kr5iukpRZgeMAgCBam3Vtpump",
       "symbol": "Split",
-      "mcapUsd": 135990
+      "mcapUsd": 125579
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:top10,insiders,too_old,volume_1h",
       "mint": "85cQsFgbi8mBZxiPppbpPXuV7j1hA8tBwhjF4gKW6mHg",
       "symbol": "Rizzmas",
-      "mcapUsd": 634498
+      "mcapUsd": 634310
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:insiders,liquidity,volume_1h",
       "mint": "DG2EJSEtPBge5F7zBCTZG78p27LTCiq8tUkJ39qupump",
       "symbol": "duk",
-      "mcapUsd": 22729
+      "mcapUsd": 23081
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:missing:devPct",
       "mint": "zcRvzm7gAfYGde8gRwaSYxNryL47SjLVUQLAf1bdoor",
       "symbol": "SIDOOR",
-      "mcapUsd": 617966
+      "mcapUsd": 617423
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:insiders,too_old,volume_1h",
       "mint": "3Tg6YnNrfPdFfsY14MaNsDMWLseAyrUDS3myJtbaJN6f",
       "symbol": "BASKET",
-      "mcapUsd": 321675
+      "mcapUsd": 317365
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:top10,insiders,liquidity,too_old,volume_1h",
       "mint": "7R4MP6VX7n3RMNhL9zsk5Zu5ibZvwq8npUYnRq7epump",
       "symbol": "Singularity",
-      "mcapUsd": 77795
+      "mcapUsd": 76217
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
-      "detail": "kill:top10,liquidity,too_young,risk_score,volume_1h,ticket_share",
-      "mint": "4zoqZesFANGaDj786y1KbY3cHPtvoX74ErXwH7m4ZVcY",
-      "symbol": "POTATO",
-      "mcapUsd": 531720
+      "detail": "kill:top10,dev_pct,liquidity,too_young,volume_1h",
+      "mint": "Hq1Ux3LmMc5uteGqgE6HpJuJBH5mXoYfGc3QDqNUjZyF",
+      "symbol": "BITGOIN",
+      "mcapUsd": 51805
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
-      "detail": "kill:top10,liquidity,too_young,risk_score,volume_1h,ticket_share",
-      "mint": "Apc61MLKamV4Ys3Jm5PrwAcVsiFSE6VUhtcRJhdfBAGS",
+      "detail": "kill:missing:lpLockedOrBurned",
+      "mint": "GrcvWhHvbHXLN5jrpoSr6uLs3msogCn3kGWhdMMpAH2f",
       "symbol": "Sol",
-      "mcapUsd": 516453
+      "mcapUsd": 22531.91
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
-      "detail": "kill:liquidity,too_young,risk_score,volume_1h,ticket_share",
-      "mint": "2a6EdbyFweuGgSBb8tnd1Li5JbqtVfHDcH4zA7uDHS8o",
-      "symbol": "NASDAQISTA",
-      "mcapUsd": 792577
+      "detail": "kill:top10,liquidity,too_young,volume_1h,ticket_share",
+      "mint": "GcpSzWYvujiiijyAQVg8oD7G2k3zpyLgmjbQdpqLVHw3",
+      "symbol": "Zero",
+      "mcapUsd": 30233
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
-      "detail": "kill:top10,insiders,liquidity",
-      "mint": "AQ1VAV8JM1UuwCtgH6GPMDeDdujudfh697KP5XeV8vdY",
-      "symbol": "STEADY",
-      "mcapUsd": 27571
+      "detail": "kill:lp_not_locked,top10,too_young,risk_score,volume_1h",
+      "mint": "A197f4164ZNumhYL1sxTqZBRtZe6SAruisBjAz9pump",
+      "symbol": "GBOARD",
+      "mcapUsd": 115569
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
-      "kind": "kill",
-      "detail": "kill:top10,insiders,liquidity,too_young,volume_1h,ticket_share",
-      "mint": "YaPsehxLpnmA3pHoTSwpimmjKFwhEMQWqyvxtQmm9m3",
-      "symbol": "SPEC",
-      "mcapUsd": 30296
-    },
-    {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:lp_not_locked,liquidity,too_young,risk_score",
       "mint": "6XGHv8KvqJg5Kekr8zydwmpHrJhWSARJZKJNTHJ97UyQ",
       "symbol": "BITGOIN",
-      "mcapUsd": 59262
+      "mcapUsd": 115518
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
-      "detail": "kill:insiders,liquidity",
-      "mint": "5TkyHpVZCnuW6w21q6mvFQ2Fgyvq3KySHJqfuki9pump",
-      "symbol": "Hyperball",
-      "mcapUsd": 26137
+      "detail": "kill:liquidity,too_young",
+      "mint": "659ziXQiNko5cdGzPaBKVu81ahHzZMTFKBcNxe5ALXkG",
+      "symbol": "Maebashi",
+      "mcapUsd": 21362
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
-      "detail": "kill:insiders,liquidity",
+      "detail": "kill:insiders",
       "mint": "Xb6V46U9hHHxiJnoAFxiEqEh59owzdt1ZL9q5zpVSoL",
       "symbol": "Sol",
-      "mcapUsd": 80661
+      "mcapUsd": 142554
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:top10,insiders,liquidity",
       "mint": "2B5Kvj7fYFjowTW959yYzWVvKVwvWGUi9e96e3kMw7PB",
       "symbol": "BLR",
-      "mcapUsd": 27888
+      "mcapUsd": 28704
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:too_old,volume_1h",
       "mint": "EwUVBpdM5vw1CJHRMSLywzVjyQSJZpy6qboxEPBKpump",
       "symbol": "PumpMas",
-      "mcapUsd": 166832
+      "mcapUsd": 167369
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:insiders,liquidity",
       "mint": "7dc3gFoyuDCPWjrfZfX99uasJJSceAJx5ucE8bDGpump",
       "symbol": "WINTER",
-      "mcapUsd": 86649
+      "mcapUsd": 85049
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:insiders,too_old,volume_1h",
       "mint": "FeMbDoX7R1Psc4GEcvJdsbNbZA3bfztcyDCatJVJpump",
       "symbol": "three",
-      "mcapUsd": 422856
+      "mcapUsd": 424705
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:top10,insiders,liquidity,too_old,volume_1h",
       "mint": "MAXXib7SQAQn4ymrwhhR9qMRUcYv8BNhbQxizJn5CCk",
       "symbol": "Maxxmas",
-      "mcapUsd": 55215
+      "mcapUsd": 53822
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:top10,insiders,too_old,volume_1h",
       "mint": "G1ij1UjWBcUFtVHz5GVDAopPNMQcbwtdegH94LU6Jray",
@@ -246,7 +238,7 @@
       "mcapUsd": 393545
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:liquidity,too_old,no_sells",
       "mint": "64MWN63e19qaw2HEecX6btUJSSbWwZgrw74bjFVVpump",
@@ -254,7 +246,7 @@
       "mcapUsd": 39302
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:missing:devPct",
       "mint": "AqmdZvNtiDbMq5SifeZGNc8ydDidp1sLr6AtbqqCs5S2",
@@ -262,7 +254,7 @@
       "mcapUsd": 26787
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:top10,insiders,liquidity,too_old,risk_score,volume_1h",
       "mint": "7ACq9bgHPCT33TWC6yaxLX5CfNQBbFachy9xKD7Spump",
@@ -270,15 +262,15 @@
       "mcapUsd": 87558
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "judge:action_pass",
       "mint": "B9wbjDJ4FbHMsZmoXAkJSTAwuePaJUKbySvnK5zApump",
       "symbol": "Fireball",
-      "mcapUsd": 630963
+      "mcapUsd": 634497
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:missing:devPct",
       "mint": "D1PrXpSRW3zXLW1uaak9BuZ4ZpiXKwTYkZHG681xMB5i",
@@ -286,7 +278,7 @@
       "mcapUsd": 22422
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:top10,liquidity,volume_1h",
       "mint": "CVcVTN9yFswizy3DYdPKJJtYup3hpgC9U7FX1yzUpump",
@@ -294,49 +286,49 @@
       "mcapUsd": 53024
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
-      "detail": "kill:insiders,too_old",
+      "detail": "kill:missing:mintAuthorityEnabled,missing:freezeAuthorityEnabled,missing:lpLockedOrBurned,missing:top10PctExPool,missing:devPct",
       "mint": "9msLfYfXBrSbrApCZAPuPMCNmPqNtEL1VPKh1AEYpump",
       "symbol": "enu",
-      "mcapUsd": 330239
+      "mcapUsd": 330632
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:insiders,liquidity,volume_1h",
       "mint": "RecRFwNXRbTuDwDnvokNv5h4hLQubaDZMJwKfshpump",
       "symbol": "MOSTO",
-      "mcapUsd": 24125
+      "mcapUsd": 26768
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:top10,insiders,liquidity,volume_1h",
       "mint": "C8CZZnPJzPaWhB82EmpKMZc5PEqNnQ46n43j5Fj9pump",
       "symbol": "Gemma",
-      "mcapUsd": 38931
+      "mcapUsd": 43509
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:missing:lpLockedOrBurned",
       "mint": "6p5wPmprdM2gATReh9j5JvxJs8U1PcyWD3neuLvr8sGq",
       "symbol": "POOSTANK",
-      "mcapUsd": 29031
+      "mcapUsd": 29024
     },
     {
-      "time": "2026-11-27T23:26:00.856Z",
+      "time": "2026-11-27T23:30:56.954Z",
       "kind": "kill",
       "detail": "kill:too_old,volume_1h",
       "mint": "6C9r2gzu8Pr54hTevHo3x5gSj9JqtpApj7obJnrtpump",
       "symbol": "ROCKET",
-      "mcapUsd": 796759
+      "mcapUsd": 795937
     }
   ],
   "logCounts": {
-    "total": 38,
-    "kills": 37,
+    "total": 37,
+    "kills": 36,
     "verdicts": 0,
     "opens": 0,
     "closes": 0
